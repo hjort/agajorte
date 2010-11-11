@@ -5,7 +5,6 @@ import java.util.List;
 import br.gov.frameworkdemoiselle.cassandra.HelenaDAO;
 
 import com.hsiconsultoria.bean.Followship;
-import com.hsiconsultoria.bean.User;
 
 /**
  * @author Rodrigo Hjort
@@ -17,14 +16,14 @@ public interface IFollowshipDAO extends HelenaDAO<Followship> {
 	 * 
 	 * @param followship
 	 */
-	void save(Followship followship);
+//	void save(Followship followship);
 
 	/**
 	 * Removes a friendship relationship from one user to another.
 	 * 
 	 * @param followship
 	 */
-	void remove(Followship followship);
+//	void remove(Followship followship);
 
 	/**
 	 * Given a user login, gets the logins of the people that the user is following.
@@ -32,7 +31,7 @@ public interface IFollowshipDAO extends HelenaDAO<Followship> {
 	 * @param follower
 	 * @return
 	 */
-	List<String> findFollowingsLogins(User follower);
+	List<String> findFollowingsLogins(String follower);
 
 	/**
 	 * Given a user login, gets the logins of the people following that user.
@@ -40,6 +39,6 @@ public interface IFollowshipDAO extends HelenaDAO<Followship> {
 	 * @param followed
 	 * @return
 	 */
-	List<String> findFollowersLogins(User followed);
+	List<String> findFollowersLogins(String followed);
 
 }

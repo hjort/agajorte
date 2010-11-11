@@ -13,14 +13,6 @@ public class UserDAO extends HelenaSimpleDAO<User> implements IUserDAO {
 		return get(login);
 	}
 
-	public void save(User user) {
-		insert(user);
-	}
-
-	public void remove(User user) {
-		delete(user);
-	}
-
 	public List<User> findByLogins(Iterable<String> logins) {
 		return get(logins);
 	}

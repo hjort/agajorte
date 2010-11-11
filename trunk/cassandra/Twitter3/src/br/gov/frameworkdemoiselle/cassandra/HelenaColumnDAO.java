@@ -43,7 +43,6 @@ public abstract class HelenaColumnDAO<T> extends AbstractHelenaDAO<T> {
 		final HelenaColumnBean annotation = clz.getAnnotation(HelenaColumnBean.class);
 		
 		this.typeConverter = new TypeConverter(typeMappings, serializationPolicy);
-//		this.clz = clz;
 
 		this.keyspace = annotation.keyspace();
 		this.columnFamily = annotation.columnFamily();
@@ -80,7 +79,7 @@ public abstract class HelenaColumnDAO<T> extends AbstractHelenaDAO<T> {
 		}
 	}
 
-	public void insert(final T object) {
+	public void save(final T object) {
 		try {
 			final String keyName = keyPropertyDescriptor.getName();
 			final Object keyValue = PropertyUtils.getProperty(object, keyName);
@@ -102,7 +101,6 @@ public abstract class HelenaColumnDAO<T> extends AbstractHelenaDAO<T> {
 			final byte[] value = tempValue;
 
 			execute(new Command<Void>() {
-				@Override
 				public Void execute(final Keyspace ks) throws HectorException {
 					
 					ColumnPath columnPath = new ColumnPath();
@@ -137,7 +135,6 @@ public abstract class HelenaColumnDAO<T> extends AbstractHelenaDAO<T> {
 			final byte[] columnBytes = typeConverter.convertValueObjectToByteArray(columnValue);
 
 			execute(new Command<Void>() {
-				@Override
 				public Void execute(final Keyspace ks) throws HectorException {
 					
 					ColumnPath columnPath = new ColumnPath();
@@ -165,7 +162,6 @@ public abstract class HelenaColumnDAO<T> extends AbstractHelenaDAO<T> {
 		final List<String> result = new ArrayList<String>();
 		try {
 			execute(new Command<Void>() {
-				@Override
 				public Void execute(final Keyspace ks) throws HectorException {
 					
 					SlicePredicate predicate = new SlicePredicate();
@@ -197,7 +193,6 @@ public abstract class HelenaColumnDAO<T> extends AbstractHelenaDAO<T> {
 		final List<String> result = new ArrayList<String>();
 		try {
 			execute(new Command<Void>() {
-				@Override
 				public Void execute(final Keyspace ks) throws HectorException {
 					
 					SlicePredicate predicate = new SlicePredicate();
@@ -229,7 +224,6 @@ public abstract class HelenaColumnDAO<T> extends AbstractHelenaDAO<T> {
 		final List<String> result = new ArrayList<String>();
 		try {
 			execute(new Command<Void>() {
-				@Override
 				public Void execute(final Keyspace ks) throws HectorException {
 					
 					SlicePredicate predicate = new SlicePredicate();
