@@ -2,7 +2,7 @@ package com.hsiconsultoria.dao;
 
 import java.util.List;
 
-import br.gov.frameworkdemoiselle.cassandra.HelenaDAO;
+import br.gov.frameworkdemoiselle.helena.HelenaDAO;
 
 import com.hsiconsultoria.bean.UserLine;
 
