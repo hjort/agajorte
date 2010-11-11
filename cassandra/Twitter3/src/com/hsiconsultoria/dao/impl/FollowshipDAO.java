@@ -2,13 +2,13 @@ package com.hsiconsultoria.dao.impl;
 
 import java.util.List;
 
-import br.gov.frameworkdemoiselle.cassandra.HelenaSimpleDAO;
+import br.gov.frameworkdemoiselle.cassandra.HelenaColumnDAO;
 
 import com.hsiconsultoria.bean.Followship;
 import com.hsiconsultoria.bean.User;
 import com.hsiconsultoria.dao.IFollowshipDAO;
 
-public class FollowshipDAO extends HelenaSimpleDAO<Followship> implements IFollowshipDAO {
+public class FollowshipDAO extends HelenaColumnDAO<Followship> implements IFollowshipDAO {
 
 	public void save(Followship followship) {
 	}

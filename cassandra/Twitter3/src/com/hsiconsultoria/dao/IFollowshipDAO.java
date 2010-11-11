@@ -2,13 +2,15 @@ package com.hsiconsultoria.dao;
 
 import java.util.List;
 
+import br.gov.frameworkdemoiselle.cassandra.HelenaDAO;
+
 import com.hsiconsultoria.bean.Followship;
 import com.hsiconsultoria.bean.User;
 
 /**
  * @author Rodrigo Hjort
  */
-public interface IFollowshipDAO {
+public interface IFollowshipDAO extends HelenaDAO<Followship> {
 
 	/**
 	 * Adds a friendship relationship from one user to another.

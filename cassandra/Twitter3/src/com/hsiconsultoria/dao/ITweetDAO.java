@@ -2,13 +2,15 @@ package com.hsiconsultoria.dao;
 
 import java.util.List;
 
+import br.gov.frameworkdemoiselle.cassandra.HelenaDAO;
+
 import com.hsiconsultoria.bean.Tweet;
 import com.hsiconsultoria.bean.User;
 
 /**
  * @author Rodrigo Hjort
  */
-public interface ITweetDAO {
+public interface ITweetDAO extends HelenaDAO<Tweet> {
 
 	/**
 	 * Given a tweet id, this gets the tweet record.
