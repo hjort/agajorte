@@ -3,7 +3,7 @@ package com.hsiconsultoria.bean;
 import br.gov.frameworkdemoiselle.cassandra.annotation.CassandraEntity;
 import br.gov.frameworkdemoiselle.cassandra.annotation.KeyProperty;
 
-@CassandraEntity(keyspace="Twitter", columnFamily="Tweets")
+@CassandraEntity(keyspace = "Twitter", columnFamily = "Tweets")
 public class Tweet {
 
 	@KeyProperty

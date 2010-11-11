@@ -2,6 +2,8 @@ package com.hsiconsultoria.business;
 
 import java.util.List;
 
+import br.gov.framework.demoiselle.core.layer.IFacade;
+
 import com.hsiconsultoria.bean.Followship;
 import com.hsiconsultoria.bean.Tweet;
 import com.hsiconsultoria.bean.User;
@@ -9,7 +11,7 @@ import com.hsiconsultoria.bean.User;
 /**
  * @author Rodrigo Hjort
  */
-public interface ITwitterFacade {
+public interface ITwitterFacade extends IFacade {
 
 	// user
 	
