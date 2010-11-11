@@ -8,8 +8,6 @@ import junit.framework.Assert;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.thiesen.helenaorm.HelenaORMDAOFactory;
-import org.thiesen.helenaorm.SerializeUnknownClasses;
 
 import com.hsiconsultoria.bean.Followship;
 import com.hsiconsultoria.bean.Tweet;
@@ -22,7 +20,6 @@ public class TwitterFacadeTest {
 //	@Injection
 	private static ITwitterFacade facade;
 //	private static HelenaORMDAOFactory factory;
-//	private static ITwitterFacade facade;
 	
 	private static Random random = new Random();
 	

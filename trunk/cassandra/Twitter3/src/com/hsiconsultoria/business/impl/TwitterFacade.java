@@ -1,15 +1,10 @@
 package com.hsiconsultoria.business.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.thiesen.helenaorm.HelenaORMDAOFactory;
-
 import com.hsiconsultoria.bean.Followship;
-import com.hsiconsultoria.bean.TimeLine;
 import com.hsiconsultoria.bean.Tweet;
 import com.hsiconsultoria.bean.User;
-import com.hsiconsultoria.bean.UserLine;
 import com.hsiconsultoria.business.ITwitterFacade;
 import com.hsiconsultoria.dao.IFollowshipDAO;
 import com.hsiconsultoria.dao.ITweetDAO;
