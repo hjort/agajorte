@@ -1,5 +1,5 @@
 package br.gov.frameworkdemoiselle.cassandra;
 
-public interface CassandraDAO {
+public interface CassandraDAO<T> {
 
 }
