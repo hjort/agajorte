@@ -5,9 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-//import org.apache.cassandra.thrift.ConsistencyLevel;
-
-//import org.apache.cassandra.thrift.ConsistencyLevel;
+import org.apache.cassandra.thrift.ConsistencyLevel;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
@@ -19,6 +17,6 @@ public @interface CassandraColumn {
 
 	String secondaryColumnFamily() default "";
 
-//	ConsistencyLevel consistency() default ConsistencyLevel.QUORUM;
+	ConsistencyLevel consistency() default ConsistencyLevel.QUORUM;
 
 }
