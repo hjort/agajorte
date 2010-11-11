@@ -2,6 +2,7 @@ package com.hsiconsultoria.dao;
 
 import java.util.List;
 
+import br.gov.framework.demoiselle.core.layer.IPersistenceController;
 import br.gov.frameworkdemoiselle.cassandra.CassandraDAO;
 
 import com.hsiconsultoria.bean.User;
@@ -9,7 +10,7 @@ import com.hsiconsultoria.bean.User;
 /**
  * @author Rodrigo Hjort
  */
-public interface IUserDAO extends CassandraDAO<User> {
+public interface IUserDAO extends CassandraDAO<User>, IPersistenceController {
 
 	/**
 	 * Given a user login, this gets the user record.

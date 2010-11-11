@@ -3,6 +3,8 @@ package com.hsiconsultoria.business.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.gov.framework.demoiselle.core.layer.integration.Injection;
+
 import com.hsiconsultoria.bean.Followship;
 import com.hsiconsultoria.bean.TimeLine;
 import com.hsiconsultoria.bean.Tweet;
@@ -14,28 +16,34 @@ import com.hsiconsultoria.dao.ITimeLineDAO;
 import com.hsiconsultoria.dao.ITweetDAO;
 import com.hsiconsultoria.dao.IUserDAO;
 import com.hsiconsultoria.dao.IUserLineDAO;
-import com.hsiconsultoria.dao.impl.FollowshipDAO;
-import com.hsiconsultoria.dao.impl.TimeLineDAO;
-import com.hsiconsultoria.dao.impl.TweetDAO;
-import com.hsiconsultoria.dao.impl.UserDAO;
-import com.hsiconsultoria.dao.impl.UserLineDAO;
 
 public class TwitterFacade implements ITwitterFacade {
 
+	private static final long serialVersionUID = 1L;
+
+	@Injection
 	private IUserDAO userDAO;
+	
+	@Injection
 	private IFollowshipDAO followshipDAO;
+	
+	@Injection
 	private ITweetDAO tweetDAO;
+	
+	@Injection
 	private IUserLineDAO userlineDAO;
+	
+	@Injection
 	private ITimeLineDAO timelineDAO;
 
 	private static final int TWEETS_DEFAULT_COUNT = 40;
 
 	public TwitterFacade() {
-		userDAO = new UserDAO();
-		followshipDAO = new FollowshipDAO();
-		tweetDAO = new TweetDAO();
-		userlineDAO = new UserLineDAO();
-		timelineDAO = new TimeLineDAO();
+//		userDAO = new UserDAO();
+//		followshipDAO = new FollowshipDAO();
+//		tweetDAO = new TweetDAO();
+//		userlineDAO = new UserLineDAO();
+//		timelineDAO = new TimeLineDAO();
 	}
 	
 	public User createUser(String login, String name, String password) {
