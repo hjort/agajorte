@@ -142,7 +142,7 @@ public class TwitterFacadeTest {
 		Assert.assertNull(retrieved);
 
 		List<Tweet> tweets = facade.findUserLastTweets(USER_LOGIN);
-		Assert.assertNull(tweets);
+		Assert.assertTrue(tweets.isEmpty());
 	}
 
 	@Test
