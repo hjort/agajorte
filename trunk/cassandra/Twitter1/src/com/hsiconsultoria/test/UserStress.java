@@ -1,13 +1,9 @@
 package com.hsiconsultoria.test;
 
 import java.text.DateFormat;
-import java.text.FieldPosition;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
-import com.hsiconsultoria.bean.User;
 import com.hsiconsultoria.business.ITwitterFacade;
 import com.hsiconsultoria.business.impl.TwitterFacade;
 
@@ -49,14 +45,13 @@ public class UserStress {
 			DateFormat df = new SimpleDateFormat("HH:MM:ss");
 			String name = "User " + df.format(cal.getTime());
 			
-			User user =	facade.createUser("user" + i, name, pass);
+			facade.createUser("user" + i, name, pass);
 		}
 	}
 	
 	public void loadUsers() {
 		for (int i = 1; i <= MAX_COUNT; i++) {
-			User user =	facade.findUserByLogin("user" + i);
-//			System.out.println(user);
+			facade.findUserByLogin("user" + i);
 		}
 	}
 	
