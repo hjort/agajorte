@@ -4,10 +4,13 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Cassandra Libraries"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/HelenaORM"/>
 	<classpathentry kind="lib" path="/HelenaORM/lib/commons-lang-2.4.jar"/>
 	<classpathentry kind="lib" path="/HelenaORM/lib/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="lib" path="/HelenaORM/lib/commons-pool-1.5.3.jar"/>
 	<classpathentry kind="lib" path="/HelenaORM/lib/perf4j-0.9.12.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/HelenaORM"/>
+	<classpathentry kind="con" path="org.eclipse.ajdt.core.ASPECTJRT_CONTAINER"/>
+	<classpathentry kind="lib" path="/HelenaORM/lib/google-collections-1.0.jar"/>
+	<classpathentry kind="lib" path="/HelenaORM/lib/hector-0.6.0-15.jar" sourcepath="/home/rodrigo/Projetos/serpro/nosql/hector-0.6.0-15/hector-0.6.0-15-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

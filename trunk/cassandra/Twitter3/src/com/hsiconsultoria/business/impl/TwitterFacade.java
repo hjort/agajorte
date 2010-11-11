@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.thiesen.helenaorm.HelenaORMDAOFactory;
 
-import br.gov.frameworkdemoiselle.annotation.Injection;
-
 import com.hsiconsultoria.bean.Followship;
 import com.hsiconsultoria.bean.TimeLine;
 import com.hsiconsultoria.bean.Tweet;
@@ -16,16 +14,19 @@ import com.hsiconsultoria.business.ITwitterFacade;
 import com.hsiconsultoria.dao.IFollowshipDAO;
 import com.hsiconsultoria.dao.ITweetDAO;
 import com.hsiconsultoria.dao.IUserDAO;
+import com.hsiconsultoria.dao.impl.FollowshipDAO;
+import com.hsiconsultoria.dao.impl.TweetDAO;
+import com.hsiconsultoria.dao.impl.UserDAO;
 
 public class TwitterFacade implements ITwitterFacade {
 
-	@Injection
+//	@Injection
 	private IUserDAO userDAO;
 	
-	@Injection
+//	@Injection
 	private IFollowshipDAO followshipDAO;
 
-	@Injection
+//	@Injection
 	private ITweetDAO tweetDAO;
 	
 //	@Injection
@@ -36,6 +37,12 @@ public class TwitterFacade implements ITwitterFacade {
 
 	private static final int TWEETS_DEFAULT_COUNT = 40;
 
+	public TwitterFacade() {
+		userDAO = new UserDAO();
+		followshipDAO = new FollowshipDAO();
+		tweetDAO = new TweetDAO();
+	}
+	
 	/*
 	public TwitterFacade(HelenaORMDAOFactory factory) {
 		userDAO = factory.makeDaoForClass(User.class);
