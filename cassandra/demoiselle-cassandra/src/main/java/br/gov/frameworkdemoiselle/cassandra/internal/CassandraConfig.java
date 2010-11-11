@@ -1,4 +1,4 @@
-package br.gov.frameworkdemoiselle.cassandra.session;
+package br.gov.frameworkdemoiselle.cassandra.internal;
 
 import br.gov.framework.demoiselle.util.Constant;
 import br.gov.framework.demoiselle.util.config.ConfigKey;
