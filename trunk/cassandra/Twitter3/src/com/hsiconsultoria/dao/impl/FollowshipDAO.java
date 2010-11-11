@@ -2,7 +2,7 @@ package com.hsiconsultoria.dao.impl;
 
 import java.util.List;
 
-import br.gov.frameworkdemoiselle.cassandra.HelenaColumnDAO;
+import br.gov.frameworkdemoiselle.helena.HelenaColumnDAO;
 
 import com.hsiconsultoria.bean.Followship;
 import com.hsiconsultoria.dao.IFollowshipDAO;

@@ -2,7 +2,7 @@ package com.hsiconsultoria.dao.impl;
 
 import java.util.List;
 
-import br.gov.frameworkdemoiselle.cassandra.HelenaSimpleDAO;
+import br.gov.frameworkdemoiselle.helena.HelenaSimpleDAO;
 
 import com.hsiconsultoria.bean.User;
 import com.hsiconsultoria.dao.IUserDAO;
