@@ -71,13 +71,10 @@ public class TypeConverter {
 
 	private byte[] serialize(final Object propertyValue) {
 		try {
-			
 			final ByteArrayOutputStream out = new ByteArrayOutputStream();
 			final ObjectOutputStream oout = new ObjectOutputStream(out);
-
 			oout.writeObject(propertyValue);
 			oout.close();
-
 			return out.toByteArray();
 		} catch (final IOException e) {
 			throw new CassandraException("Unable to serialize object of type " + propertyValue.getClass(), e);
@@ -108,10 +105,8 @@ public class TypeConverter {
 
 	private Enum<?> makeEnumInstance(final Class<?> returnType, final byte[] value) {
 		try {
-
 			final Method method = returnType.getMethod("valueOf", String.class);
 			return (Enum<?>) method.invoke(returnType, bytesToString(value));
-
 		} catch (final SecurityException e) {
 			throw new CassandraException(e);
 		} catch (final NoSuchMethodException e) {
@@ -128,12 +123,9 @@ public class TypeConverter {
 	private Object deserialize(final byte[] value) {
 		final ByteArrayInputStream in = new ByteArrayInputStream(value);
 		try {
-
 			final ObjectInputStream oin = new ObjectInputStream(in);
 			final Object retval = oin.readObject();
-
 			oin.close();
-
 			return retval;
 		} catch (final IOException e) {
 			throw new CassandraException(e);
