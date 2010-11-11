@@ -71,7 +71,7 @@ public abstract class AbstractHelenaDAO<T> {
         
         // TODO: read type mappings from somewhere
         typeMappings = ImmutableMap.<Class<?>, TypeMapping<?>>builder().putAll(DEFAULT_TYPES)./*putAll(mappings).*/build();
-        
+
         initialize();
 	}
 

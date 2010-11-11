@@ -5,7 +5,6 @@ import java.util.List;
 import br.gov.frameworkdemoiselle.cassandra.HelenaDAO;
 
 import com.hsiconsultoria.bean.Tweet;
-import com.hsiconsultoria.bean.User;
 
 /**
  * @author Rodrigo Hjort
@@ -25,30 +24,14 @@ public interface ITweetDAO extends HelenaDAO<Tweet> {
 	 * 
 	 * @param tweet
 	 */
-	void save(Tweet tweet);
+//	void save(Tweet tweet);
 
 	/**
 	 * Removes the tweet record.
 	 * 
 	 * @param tweet
 	 */
-	void remove(Tweet tweet);
-
-	/**
-	 * Given a user id, get their userline (their tweets).
-	 * 
-	 * @param user
-	 * @return
-	 */
-	List<Long> findUserLine(User user);
-
-	/**
-	 * Given a user id, get their tweet timeline (tweets from people they follow).
-	 * 
-	 * @param user
-	 * @return
-	 */
-	List<Long> findTimeLine(User user);
+//	void remove(Tweet tweet);
 
 	/**
 	 * Given a list of tweet ids, this gets the associated tweet object for each one.

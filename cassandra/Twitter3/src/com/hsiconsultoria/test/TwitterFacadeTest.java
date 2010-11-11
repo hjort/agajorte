@@ -17,9 +17,7 @@ import com.hsiconsultoria.business.impl.TwitterFacade;
 
 public class TwitterFacadeTest {
 
-//	@Injection
 	private static ITwitterFacade facade;
-//	private static HelenaORMDAOFactory factory;
 	
 	private static Random random = new Random();
 	
@@ -50,14 +48,12 @@ public class TwitterFacadeTest {
 
 	@Test
 	public void testCreateUser() {
-		
 		User user =	facade.createUser(USER_LOGIN, USER_NAME, USER_PASS);
 		Assert.assertNotNull(user);
 	}
 
 	@Test
 	public void testFindUserByName() {
-		
 		User user = facade.findUserByLogin(USER_LOGIN);
 		Assert.assertNotNull(user);
 		Assert.assertEquals(USER_NAME, user.getName());
@@ -145,8 +141,8 @@ public class TwitterFacadeTest {
 		retrieved = facade.findTweet(lastTweetId);
 		Assert.assertNull(retrieved);
 
-//		List<Tweet> tweets = facade.findUserLastTweets(USER_LOGIN);
-//		Assert.assertNull(tweets);
+		List<Tweet> tweets = facade.findUserLastTweets(USER_LOGIN);
+		Assert.assertNull(tweets);
 	}
 
 	@Test

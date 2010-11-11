@@ -24,14 +24,14 @@ public interface IUserDAO extends HelenaDAO<User> {
 	 * 
 	 * @param user
 	 */
-	void save(User user);
+//	void save(User user);
 
 	/**
 	 * Removes the user record.
 	 * 
 	 * @param user
 	 */
-	void remove(User user);
+//	void remove(User user);
 
 	/**
 	 * Given a list of user logins, this gets the associated user object for each one.
