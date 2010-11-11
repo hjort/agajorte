@@ -2,7 +2,7 @@ package br.gov.frameworkdemoiselle.cassandra;
 
 import java.util.List;
 
-public abstract class HelenaColumnDAO<T> {
+public abstract class HelenaColumnDAO<T> extends AbstractHelenaDAO {
 
 	public HelenaColumnDAO() {
 	}

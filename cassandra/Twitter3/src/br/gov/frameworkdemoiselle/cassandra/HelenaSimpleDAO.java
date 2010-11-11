@@ -1,10 +1,23 @@
 package br.gov.frameworkdemoiselle.cassandra;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-public abstract class HelenaSimpleDAO<T> {
+import org.apache.log4j.Logger;
 
-	public HelenaSimpleDAO() {
+public abstract class HelenaSimpleDAO<T> extends AbstractHelenaDAO {
+
+	private static Logger log = Logger.getLogger(HelenaSimpleDAO.class);
+	
+	private Class<T> clz;
+	
+//	private final SerializeUnknownClasses serializationPolicy;
+//	private final ImmutableMap<Class<?>, TypeMapping<?>> typeMappings;
+	
+	@SuppressWarnings("unchecked")
+	protected HelenaSimpleDAO() {
+        clz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        log.debug("Instantiating HelenaSimpleDAO with " + clz.getSimpleName());
 	}
 
 	public void insert(final T object) {

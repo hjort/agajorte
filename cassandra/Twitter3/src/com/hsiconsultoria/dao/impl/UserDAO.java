@@ -10,19 +10,19 @@ import com.hsiconsultoria.dao.IUserDAO;
 public class UserDAO extends HelenaSimpleDAO<User> implements IUserDAO {
 
 	public User findByLogin(String login) {
-		return super.get(login);
+		return get(login);
 	}
 
 	public void save(User user) {
-		super.insert(user);
+		insert(user);
 	}
 
 	public void remove(User user) {
-		super.delete(user);
+		delete(user);
 	}
 
 	public List<User> findByLogins(Iterable<String> logins) {
-		return super.get(logins);
+		return get(logins);
 	}
 
 }

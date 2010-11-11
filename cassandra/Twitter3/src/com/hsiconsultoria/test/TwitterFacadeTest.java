@@ -11,8 +11,6 @@ import org.junit.Test;
 import org.thiesen.helenaorm.HelenaORMDAOFactory;
 import org.thiesen.helenaorm.SerializeUnknownClasses;
 
-import br.gov.frameworkdemoiselle.annotation.Injection;
-
 import com.hsiconsultoria.bean.Followship;
 import com.hsiconsultoria.bean.Tweet;
 import com.hsiconsultoria.bean.User;
@@ -21,8 +19,8 @@ import com.hsiconsultoria.business.impl.TwitterFacade;
 
 public class TwitterFacadeTest {
 
-	@Injection
-	private ITwitterFacade facade;
+//	@Injection
+	private static ITwitterFacade facade;
 //	private static HelenaORMDAOFactory factory;
 //	private static ITwitterFacade facade;
 	
@@ -45,11 +43,12 @@ public class TwitterFacadeTest {
 //		factory = HelenaORMDAOFactory.withConfig("localhost", 9160, SerializeUnknownClasses.YES);
 		facade = new TwitterFacade(factory);
 		*/
+		facade = new TwitterFacade();
 	}
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
-//		facade = null;
+		facade = null;
 	}
 
 	@Test
