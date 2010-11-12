@@ -22,8 +22,8 @@ import org.apache.log4j.Logger;
 
 import br.gov.frameworkdemoiselle.cassandra.annotation.CassandraEntity;
 import br.gov.frameworkdemoiselle.cassandra.annotation.KeyProperty;
-import br.gov.frameworkdemoiselle.cassandra.internal.MarshalledObject;
-import br.gov.frameworkdemoiselle.cassandra.internal.TypeConverter;
+import br.gov.frameworkdemoiselle.cassandra.persistence.MarshalledObject;
+import br.gov.frameworkdemoiselle.cassandra.persistence.TypeConverter;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -32,17 +32,17 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.ImmutableSet.Builder;
 
-public abstract class CassandraSimpleDAO<T> extends AbstractCassandraDAO<T> {
+public abstract class CassandraEntityDAO<T> extends AbstractCassandraDAO<T> {
 
-	private static Logger log = Logger.getLogger(CassandraSimpleDAO.class);
+	private static Logger log = Logger.getLogger(CassandraEntityDAO.class);
 	
-	protected CassandraSimpleDAO() {
+	protected CassandraEntityDAO() {
 		
-        log.debug("Instantiating CassandraSimpleDAO with " + clz.getSimpleName());
+        log.debug("Instantiating CassandraEntityDAO with " + clz.getSimpleName());
         
         if (!clz.isAnnotationPresent(CassandraEntity.class)) {
             throw new IllegalArgumentException(
-            		"Trying to create a CassandraDAO for a class that is not mapped with @CassandraEntity");
+            		"Trying to create a CassandraEntityDAO for a class that is not mapped with @CassandraEntity");
         }
         
         final CassandraEntity annotation = clz.getAnnotation(CassandraEntity.class);

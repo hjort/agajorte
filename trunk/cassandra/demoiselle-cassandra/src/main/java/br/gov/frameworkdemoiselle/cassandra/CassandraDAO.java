@@ -1,6 +1,8 @@
 package br.gov.frameworkdemoiselle.cassandra;
 
-public interface CassandraDAO<T> {
+import br.gov.framework.demoiselle.core.layer.IPersistenceController;
+
+public interface CassandraDAO<T> extends IPersistenceController {
 
 	/**
 	 * Saves the given object into the data store.
