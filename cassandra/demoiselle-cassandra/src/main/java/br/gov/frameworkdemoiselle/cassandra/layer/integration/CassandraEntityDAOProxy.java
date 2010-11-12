@@ -8,6 +8,8 @@ import br.gov.frameworkdemoiselle.cassandra.CassandraDAO;
 
 public class CassandraEntityDAOProxy<T> implements CassandraDAO<T> {
 
+	private static final long serialVersionUID = 1L;
+	
 	private static Logger log = Logger.getLogger(CassandraEntityDAOProxy.class);
 
 	// TODO: ...
