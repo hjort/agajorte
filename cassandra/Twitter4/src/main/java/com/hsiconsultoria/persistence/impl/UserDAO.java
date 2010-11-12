@@ -7,9 +7,8 @@ import br.gov.frameworkdemoiselle.cassandra.CassandraEntityDAO;
 import com.hsiconsultoria.bean.User;
 import com.hsiconsultoria.persistence.IUserDAO;
 
+@SuppressWarnings("serial")
 public class UserDAO extends CassandraEntityDAO<User> implements IUserDAO {
-
-	private static final long serialVersionUID = 1L;
 
 	public User findByLogin(String login) {
 		return get(login);
