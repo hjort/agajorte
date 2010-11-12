@@ -12,7 +12,7 @@ import com.hsiconsultoria.persistence.IUserDAO;
  */
 @SuppressWarnings("serial")
 public class UserDAO extends CassandraEntityDAO<User> implements IUserDAO {
-
+	
 	public User findByLogin(String login) {
 		return get(login);
 	}
