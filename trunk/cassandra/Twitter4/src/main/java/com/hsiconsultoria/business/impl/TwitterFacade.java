@@ -11,11 +11,11 @@ import com.hsiconsultoria.bean.Tweet;
 import com.hsiconsultoria.bean.User;
 import com.hsiconsultoria.bean.UserLine;
 import com.hsiconsultoria.business.ITwitterFacade;
-import com.hsiconsultoria.dao.IFollowshipDAO;
-import com.hsiconsultoria.dao.ITimeLineDAO;
-import com.hsiconsultoria.dao.ITweetDAO;
-import com.hsiconsultoria.dao.IUserDAO;
-import com.hsiconsultoria.dao.IUserLineDAO;
+import com.hsiconsultoria.persistence.IFollowshipDAO;
+import com.hsiconsultoria.persistence.ITimeLineDAO;
+import com.hsiconsultoria.persistence.ITweetDAO;
+import com.hsiconsultoria.persistence.IUserDAO;
+import com.hsiconsultoria.persistence.IUserLineDAO;
 
 public class TwitterFacade implements ITwitterFacade {
 
