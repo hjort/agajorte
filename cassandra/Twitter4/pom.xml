@@ -48,6 +48,34 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>aspectj-maven-plugin</artifactId>
+				<version>1.0</version>
+				<configuration>
+					<encoding>${encoding.default}</encoding>
+					<source>1.5</source>
+					<target>1.5</target>
+					<aspectLibraries>
+						<aspectLibrary>
+							<groupId>br.gov.framework.demoiselle</groupId>
+							<artifactId>demoiselle-web</artifactId>
+						</aspectLibrary>
+						<aspectLibrary>
+							<groupId>br.gov.frameworkdemoiselle</groupId>
+							<artifactId>demoiselle-cassandra</artifactId>
+						</aspectLibrary>
+					</aspectLibraries>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+							<goal>test-compile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 			<!-- 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -152,6 +180,11 @@
 		<dependency>
 			<groupId>br.gov.framework.demoiselle</groupId>
 			<artifactId>demoiselle-core</artifactId>
+			<version>1.2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>br.gov.framework.demoiselle</groupId>
+			<artifactId>demoiselle-web</artifactId>
 			<version>1.2.0</version>
 		</dependency>
 	</dependencies>
