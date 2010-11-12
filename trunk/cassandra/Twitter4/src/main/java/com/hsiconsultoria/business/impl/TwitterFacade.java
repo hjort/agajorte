@@ -17,9 +17,8 @@ import com.hsiconsultoria.persistence.ITweetDAO;
 import com.hsiconsultoria.persistence.IUserDAO;
 import com.hsiconsultoria.persistence.IUserLineDAO;
 
+@SuppressWarnings("serial")
 public class TwitterFacade implements ITwitterFacade {
-
-	private static final long serialVersionUID = 1L;
 
 	@Injection
 	private IUserDAO userDAO;
