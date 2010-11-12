@@ -25,7 +25,7 @@
  */
 package br.gov.frameworkdemoiselle.cassandra.mapping;
 
-import br.gov.frameworkdemoiselle.cassandra.internal.TypeMapping;
+import br.gov.frameworkdemoiselle.cassandra.persistence.TypeMapping;
 
 public abstract class AbstractStringBasedTypeMapping<T> implements TypeMapping<T> {
 	
