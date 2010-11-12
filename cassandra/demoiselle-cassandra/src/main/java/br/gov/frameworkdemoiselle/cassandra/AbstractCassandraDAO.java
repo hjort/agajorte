@@ -19,13 +19,14 @@ import br.gov.frameworkdemoiselle.cassandra.annotation.KeyProperty;
 import br.gov.frameworkdemoiselle.cassandra.annotation.SuperColumnProperty;
 import br.gov.frameworkdemoiselle.cassandra.annotation.Transient;
 import br.gov.frameworkdemoiselle.cassandra.annotation.ValueProperty;
-import br.gov.frameworkdemoiselle.cassandra.internal.TypeConverter;
-import br.gov.frameworkdemoiselle.cassandra.internal.TypeMapping;
+import br.gov.frameworkdemoiselle.cassandra.layer.integration.CassandraConfig;
 import br.gov.frameworkdemoiselle.cassandra.mapping.IntegerTypeMapping;
 import br.gov.frameworkdemoiselle.cassandra.mapping.LongTypeMapping;
 import br.gov.frameworkdemoiselle.cassandra.mapping.StringTypeMapping;
 import br.gov.frameworkdemoiselle.cassandra.mapping.URITypeMapping;
 import br.gov.frameworkdemoiselle.cassandra.mapping.UUIDTypeMapping;
+import br.gov.frameworkdemoiselle.cassandra.persistence.TypeConverter;
+import br.gov.frameworkdemoiselle.cassandra.persistence.TypeMapping;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -70,7 +71,7 @@ public abstract class AbstractCassandraDAO<T> {
 		
         clz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         
-        // TODO: read type mappings from somewhere
+        // TODO: read additional type mappings from somewhere (i.e., type-mappings.properties) 
         typeMappings = ImmutableMap.<Class<?>, TypeMapping<?>>builder().putAll(DEFAULT_TYPES)./*putAll(mappings).*/build();
 
         initialize();
@@ -78,9 +79,16 @@ public abstract class AbstractCassandraDAO<T> {
 
 	private void initialize() {
 		
-		// TODO: read settings from somewhere (i.e., properties file)
-		hostname = "localhost";
-		port = 9160;
+		// read settings from properties file
+		CassandraConfig config = CassandraConfig.getInstance();
+		nodes = config.getServerNodes();
+		keyspace = config.getDefaultKeyspace();
+		consistencyLevel = config.getDefaultConsistency();
+		serializeUnknownClasses = config.isSerializeUnknown();
+		
+		// TODO: implement the pooleable clients approach
+//		CassandraClientPool pool = CassandraClientPoolFactory.INSTANCE.get();
+//		CassandraClient client = pool.addCassandraHost(new CassandraHost("localhost", 9160));
 	}
 	
 	protected boolean isKeyProperty(final PropertyDescriptor d) {
@@ -130,5 +138,10 @@ public abstract class AbstractCassandraDAO<T> {
     		throw new CassandraException("One of these must be set: hostname and port or an array of nodes.");
     	}
     }
+
+	// TODO: implement this in the future, by using a pool of clients
+//	protected <T> T execute(final CassandraCommand<T> command) throws CassandraException {
+//		return command.execute(keyspace, consistencyLevel);
+//	}
 
 }

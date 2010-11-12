@@ -19,7 +19,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.log4j.Logger;
 
 import br.gov.frameworkdemoiselle.cassandra.annotation.CassandraColumn;
-import br.gov.frameworkdemoiselle.cassandra.internal.TypeConverter;
+import br.gov.frameworkdemoiselle.cassandra.persistence.TypeConverter;
 
 public abstract class CassandraColumnDAO<T> extends AbstractCassandraDAO<T> {
 
