@@ -27,7 +27,7 @@ package br.gov.frameworkdemoiselle.cassandra.mapping;
 
 import java.nio.charset.Charset;
 
-import br.gov.frameworkdemoiselle.cassandra.internal.TypeMapping;
+import br.gov.frameworkdemoiselle.cassandra.persistence.TypeMapping;
 
 public class StringTypeMapping implements TypeMapping<String> {
 
