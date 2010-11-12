@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.UUID;
 
 import me.prettyprint.cassandra.dao.Command;
-import me.prettyprint.cassandra.service.CassandraClient;
 
 import org.apache.cassandra.thrift.ConsistencyLevel;
 
@@ -45,7 +44,7 @@ public abstract class AbstractCassandraDAO<T> {
     protected String keyspace;
     protected String columnFamily;
 
-    protected ConsistencyLevel consistencyLevel = CassandraClient.DEFAULT_CONSISTENCY_LEVEL;
+    protected ConsistencyLevel consistencyLevel;
 
     protected PropertyDescriptor[] propertyDescriptors;
     protected ImmutableList<byte[]> columnNames;
