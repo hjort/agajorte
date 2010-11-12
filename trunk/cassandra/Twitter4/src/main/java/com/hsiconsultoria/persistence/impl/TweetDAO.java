@@ -9,6 +9,9 @@ import com.google.common.collect.Iterables;
 import com.hsiconsultoria.bean.Tweet;
 import com.hsiconsultoria.persistence.ITweetDAO;
 
+/**
+ * @author Rodrigo Hjort
+ */
 @SuppressWarnings("serial")
 public class TweetDAO extends CassandraEntityDAO<Tweet> implements ITweetDAO {
 

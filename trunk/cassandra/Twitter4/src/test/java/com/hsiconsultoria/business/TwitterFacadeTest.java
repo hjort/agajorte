@@ -1,4 +1,4 @@
-package com.hsiconsultoria.test;
+package com.hsiconsultoria.business;
 
 import java.util.List;
 import java.util.Random;
@@ -15,6 +15,9 @@ import com.hsiconsultoria.bean.User;
 import com.hsiconsultoria.business.ITwitterFacade;
 import com.hsiconsultoria.business.impl.TwitterFacade;
 
+/**
+ * @author Rodrigo Hjort
+ */
 public class TwitterFacadeTest {
 
 	private static ITwitterFacade facade;
@@ -32,12 +35,6 @@ public class TwitterFacadeTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		/*
-		String[] nodes = new String[] {"node1:9160", "node2:9160", "node3:9160"};
-		factory = HelenaORMDAOFactory.withConfig(nodes, SerializeUnknownClasses.YES);
-//		factory = HelenaORMDAOFactory.withConfig("localhost", 9160, SerializeUnknownClasses.YES);
-		facade = new TwitterFacade(factory);
-		*/
 		facade = new TwitterFacade();
 	}
 

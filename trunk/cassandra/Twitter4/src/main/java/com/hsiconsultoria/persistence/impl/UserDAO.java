@@ -7,6 +7,9 @@ import br.gov.frameworkdemoiselle.cassandra.CassandraEntityDAO;
 import com.hsiconsultoria.bean.User;
 import com.hsiconsultoria.persistence.IUserDAO;
 
+/**
+ * @author Rodrigo Hjort
+ */
 @SuppressWarnings("serial")
 public class UserDAO extends CassandraEntityDAO<User> implements IUserDAO {
 

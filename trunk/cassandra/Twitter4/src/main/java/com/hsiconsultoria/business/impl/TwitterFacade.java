@@ -17,6 +17,9 @@ import com.hsiconsultoria.persistence.ITweetDAO;
 import com.hsiconsultoria.persistence.IUserDAO;
 import com.hsiconsultoria.persistence.IUserLineDAO;
 
+/**
+ * @author Rodrigo Hjort
+ */
 @SuppressWarnings("serial")
 public class TwitterFacade implements ITwitterFacade {
 

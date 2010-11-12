@@ -20,20 +20,6 @@ public interface ITweetDAO extends CassandraDAO<Tweet> {
 	Tweet findById(Long id);
 
 	/**
-	 * Saves the tweet record.
-	 * 
-	 * @param tweet
-	 */
-//	void save(Tweet tweet);
-
-	/**
-	 * Removes the tweet record.
-	 * 
-	 * @param tweet
-	 */
-//	void remove(Tweet tweet);
-
-	/**
 	 * Given a list of tweet ids, this gets the associated tweet object for each one.
 	 * 
 	 * @param ids
