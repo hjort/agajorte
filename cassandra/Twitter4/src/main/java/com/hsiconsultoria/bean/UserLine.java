@@ -5,6 +5,9 @@ import br.gov.frameworkdemoiselle.cassandra.annotation.ColumnProperty;
 import br.gov.frameworkdemoiselle.cassandra.annotation.KeyProperty;
 import br.gov.frameworkdemoiselle.cassandra.annotation.ValueProperty;
 
+/**
+ * @author Rodrigo Hjort
+ */
 @CassandraColumn(keyspace = "Twitter", columnFamily = "Userline")
 public class UserLine implements TweetLine {
 

@@ -4,6 +4,9 @@ import br.gov.frameworkdemoiselle.cassandra.annotation.CassandraColumn;
 import br.gov.frameworkdemoiselle.cassandra.annotation.ColumnProperty;
 import br.gov.frameworkdemoiselle.cassandra.annotation.KeyProperty;
 
+/**
+ * @author Rodrigo Hjort
+ */
 @CassandraColumn(keyspace = "Twitter", columnFamily = "Following", secondaryColumnFamily = "Followers")
 public class Followship {
 

@@ -7,6 +7,9 @@ import br.gov.frameworkdemoiselle.cassandra.annotation.CassandraEntity;
 import br.gov.frameworkdemoiselle.cassandra.annotation.KeyProperty;
 import br.gov.frameworkdemoiselle.cassandra.annotation.Transient;
 
+/**
+ * @author Rodrigo Hjort
+ */
 @CassandraEntity(keyspace = "Twitter", columnFamily = "Users")
 public class User {
 

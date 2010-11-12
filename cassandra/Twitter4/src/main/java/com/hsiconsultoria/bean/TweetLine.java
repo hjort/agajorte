@@ -1,5 +1,8 @@
 package com.hsiconsultoria.bean;
 
+/**
+ * @author Rodrigo Hjort
+ */
 public interface TweetLine {
 
 	String getUser();
