@@ -75,12 +75,12 @@ public class TwitterFacadeTest {
 		facade.createUser(FOLLOWED_LOGIN, FOLLOWED_NAME, null);
 		Assert.assertTrue(true);
 		
-		log.debug("User " + USER_LOGIN + " following " + FOLLOWED_LOGIN);
+		log.debug("User '" + USER_LOGIN + "' following '" + FOLLOWED_LOGIN + "'");
 		Followship followship = facade.followUser(USER_LOGIN, FOLLOWED_LOGIN);
 		Assert.assertNotNull(followship);
 		log.debug("Created followship: " + followship);
 		
-		log.debug("Finding users " + USER_LOGIN + " is following");
+		log.debug("Finding users '" + USER_LOGIN + "' is following");
 		List<User> followings = facade.findUserFollowings(USER_LOGIN);
 		Assert.assertNotNull(followings);
 		Assert.assertFalse(followings.isEmpty());
@@ -89,7 +89,7 @@ public class TwitterFacadeTest {
 		Assert.assertEquals(FOLLOWED_NAME, followings.get(0).getName());
 		log.debug("Following users: " + followings);
 		
-		log.debug("Finding users that follow " + FOLLOWED_LOGIN);
+		log.debug("Finding users that follow '" + FOLLOWED_LOGIN + "'");
 		List<User> followers = facade.findUserFollowers(FOLLOWED_LOGIN);
 		Assert.assertNotNull(followers);
 		Assert.assertFalse(followers.isEmpty());
@@ -107,7 +107,7 @@ public class TwitterFacadeTest {
 		
 		final String SAMPLE_TEXT = "This is a simple tweet!";
 		
-		log.debug("User " + USER_LOGIN + " is tweeting");
+		log.debug("User '" + USER_LOGIN + "' is tweeting");
 		Tweet tweet = facade.postTweet(USER_LOGIN, SAMPLE_TEXT);
 		Assert.assertNotNull(tweet);
 		lastTweetId = tweet.getId();
@@ -119,7 +119,7 @@ public class TwitterFacadeTest {
 		Assert.assertEquals(lastTweetId, retrieved.getId());
 		log.debug("Tweet found: " + retrieved);
 		
-		log.debug("Finding last tweets from " + USER_LOGIN);
+		log.debug("Finding last tweets from '" + USER_LOGIN + "'");
 		List<Tweet> tweets = facade.findUserLastTweets(USER_LOGIN);
 		Assert.assertNotNull(tweets);
 		Assert.assertFalse(tweets.isEmpty());
@@ -127,7 +127,7 @@ public class TwitterFacadeTest {
 		Assert.assertEquals(SAMPLE_TEXT, tweets.get(0).getText());
 		log.debug("Tweets found: " + tweets);
 
-		log.debug("Finding last tweets from " + FOLLOWED_LOGIN);
+		log.debug("Finding last tweets from '" + FOLLOWED_LOGIN + "'");
 		tweets = facade.findUserLastTweets(FOLLOWED_LOGIN);
 		Assert.assertNotNull(tweets);
 		Assert.assertFalse(tweets.isEmpty());
@@ -139,7 +139,7 @@ public class TwitterFacadeTest {
 	@Test
 	public void testUnfollowUser() {
 		
-		log.debug("User " + USER_LOGIN + " is unfollowing " + FOLLOWED_LOGIN);
+		log.debug("User '" + USER_LOGIN + "' is unfollowing '" + FOLLOWED_LOGIN + "'");
 		facade.unfollowUser(USER_LOGIN, FOLLOWED_LOGIN);
 		Assert.assertTrue(true);
 		
