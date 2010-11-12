@@ -9,6 +9,7 @@ import com.google.common.collect.Lists;
 import com.hsiconsultoria.bean.TimeLine;
 import com.hsiconsultoria.persistence.ITimeLineDAO;
 
+@SuppressWarnings("serial")
 public class TimeLineDAO extends CassandraColumnDAO<TimeLine> implements ITimeLineDAO {
 
 	public List<Long> findTimeLine(String user) {

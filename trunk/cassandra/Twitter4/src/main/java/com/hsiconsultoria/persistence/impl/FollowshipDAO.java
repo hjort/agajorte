@@ -7,6 +7,7 @@ import br.gov.frameworkdemoiselle.cassandra.CassandraColumnDAO;
 import com.hsiconsultoria.bean.Followship;
 import com.hsiconsultoria.persistence.IFollowshipDAO;
 
+@SuppressWarnings("serial")
 public class FollowshipDAO extends CassandraColumnDAO<Followship> implements IFollowshipDAO {
 
 	public List<String> findFollowingsLogins(String follower) {

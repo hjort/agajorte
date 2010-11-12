@@ -9,6 +9,7 @@ import com.google.common.collect.Lists;
 import com.hsiconsultoria.bean.UserLine;
 import com.hsiconsultoria.persistence.IUserLineDAO;
 
+@SuppressWarnings("serial")
 public class UserLineDAO extends CassandraColumnDAO<UserLine> implements IUserLineDAO {
 
 	public List<Long> findUserLine(String user) {
