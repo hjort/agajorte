@@ -32,74 +32,137 @@ Apache Cassandra
 
 [images/nosql-logo.png] Logo NoSQL
 
-  O movimento NoSQL
+  <<NoSQL>>, acrônimo para <"Not Only SQL">, é um termo genérico para uma classe definida de bancos de dados
+  que diferem do modelo clássico relacional, rompendo uma longa história de SGBDs com propriedades transacionais.
   
-  Bancos que diferem do modelo clássico relacional
-não relacionais, distribuídos, horizontalmente escaláveis, com esquemas flexíveis, replicáveis, APIs simples, BASE (e não ACID)
+  Trata-se de um movimento que surgiu da necessidade de aplicações com desempenho superior e alta escalabilidade,
+  funcionalidades que os bancos de dados relacionais não eram capazes de alcançar com facilidade.
+  
+  Os bancos de dados ditos NoSQL possuem as seguintes características em comum. Em geral eles são:
+  
+  * não relacionais
+  
+  * distribuídos
+  
+  * horizontalmente escaláveis
+  
+  * possuem esquemas flexíveis
+  
+  * são replicáveis
+  
+  * possuem APIs simples
+  
+  * seguem o modelo BASE (e não ACID)
+  
+  []
+  
+  Eis algumas implementações de bancos de dados NoSQL: Bigtable (Google), Dynamo (Amazon), Cassandra (Apache), Hypertable e CouchDB.
 
-  Eis algumas implementações de bancos de dados NoSQL: Bigtable, Dynamo, Cassandra, Hypertable e CouchDB.
+  Veja mais informações sobre NoSQL em {{http://nosql-database.org/}}.
 
-http://nosql-database.org/
 
 * {O que é Apache Cassandra?}
 
 [images/cassandra-logo.png] Logo Cassandra
 
-  ...
-  
-  Cassandra: um breve histórico
-  
-  "A high performance, scalable, distributed storage and processing system for structured and unstructured data."
-  
-* O modelo de dados
+  <"A high performance, scalable, distributed storage and processing system for structured and unstructured data.">
 
-Keyspace: Agrupamento de famílias de colunas (~banco de dados)
-Column Family: Agrupamento de colunas (~tabela) com ordenação fixada
-(Row) Key: Chave que representa uma linha de colunas (~chave primária)
-Column: Representação de um valor, com:
- Nome (Name)
- Valor (Value)
- Timestamp
+  O projeto <<Apache Cassandra>> mantém um banco de dados altamente escalável de segunda geração, aliando a arquitetura
+  completamente distribuída do <<Dynamo da Amazon>> com o modelo de dados baseado em famílias de colunas do <<Bigtable da Google>>.
+  
+  O Cassandra foi inicialmente criado pelo <<Facebook>>, tendo seu código fonte liberado para a <<Fundação Apache>> em 2008. Desde
+  então é mantido por esta através de desenvolvedores e contribuidores de diversas empresas.
+  
+  
+* {Um novo modelo de dados}
+
+  O modelo de dados do Apache Cassandra é baseado no Google Bigtable, possuindo as seguintes nomenclaturas:
+  
+  * <<Keyspace>>: agrupamento de famílias de colunas (similar a um banco de dados do modelo relacional)
+  
+  * <<Column Family>>: agrupamento de colunas com ordenação fixada (similar a uma tabela)
+  
+  * <<Row Key>> ou simplemente <<Key>>: chave que representa uma linha de colunas (similar a uma chave primária)
+  
+  * <<Column>>: representação de um valor, contendo:
+  
+    ** Nome (<<Name>>)
+    
+    ** Valor (<<Value>>)
+    
+    ** <<Timestamp>>
+    
+    []
+    
+  []
+
+  Eis um exemplo de modelagem com uma <família de colunas>:
 
 [images/datamodel1.png] Família de Colunas
 
+  O Cassandra implementa também o conceito de <supercolunas>, isto é, colunas que carregam subcolunas. Eis um exemplo:
+
 [images/datamodel2.png] SuperColunas
+
 
 * {O que é Thrift?}
 
-  ...
+  Acessar e manipular os dados armazenados no Apache Cassandra não é uma tarefa trivial, uma vez que não existe uma
+  linguagem de consultas <ad-hoc> tal como SQL. Ao invés disso, é preciso utilizar uma API de baixo nível chamada
+  <<Thrift>>.
   
-  Apache Thrift
-Bibliotecas de baixo nível:
-C++
-Java
-Ruby
-Perl
-PHP
-Python
-Grails
-Scala
+  A API Thrift fornece interfaces para os desenvolvedores em diversas linguagens de programação, entre elas:
+  C++, Java, Python, PHP, Ruby, Erlang, Perl, Haskell, C#, Cocoa, Smalltalk e OCaml.
   
-  get(): busca por nome de coluna
-multiget(): por nome de coluna para um conjunto de chaves
-get_slice(): por nome de coluna ou faixa de nomes (retornando colunas ou supercolunas)
-multiget_slice(): um subconjunto de colunas para um conjunto de chaves
-get_count(): número de colunas ou supercolunas
-get_range_slice(): subconjunto de colunas para uma faixa de chaves
+  As seguintes <funções de consulta> são fornecidas pela Thrift:
+  
+  * <<<get()>>>: busca por nome de coluna
+  
+  * <<<multiget()>>>: por nome de coluna para um conjunto de chaves
+  
+  * <<<get_slice()>>>: por nome de coluna ou faixa de nomes (retornando colunas ou supercolunas)
+  
+  * <<<multiget_slice()>>>: um subconjunto de colunas para um conjunto de chaves
+  
+  * <<<get_count()>>>: número de colunas ou supercolunas
+  
+  * <<<get_range_slice()>>>: subconjunto de colunas para uma faixa de chaves
+  
+  []
+  
+  Também são disponibilizadas <funções de modificação> dos dados:
 
-insert():
-inclui ou atualiza uma coluna pela chave
-batch_insert():
-inclui ou atualiza múltiplas colunas pela chave
-remove():
-exclui uma coluna
-batch_mutate():
-funciona como batch_insert(), mas também pode excluir (v0.6+)
+  * <<<insert()>>>: inclui ou atualiza uma coluna pela chave
   
-  http://incubator.apache.org/thrift/
+  * <<<batch_insert()>>>: inclui ou atualiza múltiplas colunas pela chave
+  
+  * <<<remove()>>>: exclui uma coluna
+  
+  * <<<batch_mutate()>>>: funciona como <<<batch_insert()>>>, mas também pode excluir (v0.6+)
+  
+  []
+  
+  Veja mais informações sobre Thrift em {{http://incubator.apache.org/thrift/}}.
+  
   
 * {O que é Hector?}
 
-  ...
-
+  <<Hector>> é um cliente de alto nível em linguagem Java para o Cassandra, o qual fornece:
+  
+  * interface simples e de alto nível orientada a objetos para o Cassandra
+  
+  * comportamento de tolerância a falhas no lado do cliente (<failover>)
+  
+  * gerenciamento de pool de conexão para melhoria de desepenho e escalabilidade
+  
+  * contadores em JMX para monitoração e gerenciamento
+  
+  * balanceamento de carga (<load balancing>)
+  
+  []
+  
+  Veja mais informações sobre Hector em {{http://prettyprint.me/2010/02/23/hector-a-java-cassandra-client/}}.
+  
+  Internamente a biblioteca Hector faz uso da API Thrift para acesso ao Cassandra. O componente
+  <<Demoiselle Cassandra>>, por sua vez, é uma camada para o Hector (e consequentemente para a Thrift).
   

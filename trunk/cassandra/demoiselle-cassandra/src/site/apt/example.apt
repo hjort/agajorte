@@ -42,15 +42,11 @@ Exemplo de Uso
 
 * {Persistência de entidade simples}
 
-   ** {hfjkgh lksjdfghl skdf}
+   * {Criação da entidade <<<User>>>}
 
    * Crie a classe correspondente à entidade com as devidas anotações da JPA:
    
 +---------------------------------------------------------------------------------------------+  
-package app.bean;
-
-...
-
 @CassandraEntity(keyspace = "Twitter", columnFamily = "Users")
 public class User {
 
@@ -60,19 +56,15 @@ public class User {
 	private String name;
 	private String password;
 
-    ...
+	...
 }
 +---------------------------------------------------------------------------------------------+
   
-   ** {hfjkgh lksjdfghl skdf}
+   ** {Criação da interface <<<IUserDAO>>>}
 
    * Estendendo a interface CassandraDAO, crie a interface correspondente à DAO que manipulará a entidade:
 
 +---------------------------------------------------------------------------------------------+  
-package app.persistence;
-
-...
-
 public interface IUserDAO extends CassandraDAO<User> {
 
 	User findByLogin(String login);
@@ -82,15 +74,11 @@ public interface IUserDAO extends CassandraDAO<User> {
 }
 +---------------------------------------------------------------------------------------------+
 
-   ** {hfjkgh lksjdfghl skdf}
+   ** {Criação da classe <<<UserDAO>>>}
 
    * Estendendo a classe JPAExtensionDAO e implementando a interface anterior, crie a classe contendo a implementação da DAO:
  
 +---------------------------------------------------------------------------------------------+   
-package app.persistence.impl;
-
-...
-
 public class UserDAO extends CassandraEntityDAO<User> implements IUserDAO {
 	
 	public User findByLogin(String login) {
@@ -102,7 +90,6 @@ public class UserDAO extends CassandraEntityDAO<User> implements IUserDAO {
 	}
 
 }
-
 +---------------------------------------------------------------------------------------------+        
 
    ** {hfjkgh lksjdfghl skdf}
@@ -110,11 +97,10 @@ public class UserDAO extends CassandraEntityDAO<User> implements IUserDAO {
    * ....:
  
 +---------------------------------------------------------------------------------------------+   
-package app.business.impl;
-
-...
-
 public class TwitterFacade extends IFacade {
+
+	@Injection
+	private IUserDAO userDAO;
 
 	public User createUser(String login, String name, String password) {
 		
@@ -137,10 +123,123 @@ public class TwitterFacade extends IFacade {
 	}
 
 }
-
 +---------------------------------------------------------------------------------------------+        
 
 * {Persistência de coluna}
 
    ...
+
+   * {Criação da entidade <<<Followship>>>}
+
+   * Crie a classe correspondente à entidade com as devidas anotações da JPA:
+   
++---------------------------------------------------------------------------------------------+  
+@CassandraColumn(keyspace = "Twitter", columnFamily = "Following",
+		secondaryColumnFamily = "Followers")
+public class Followship {
+
+	@KeyProperty
+	private String follower;
+
+	@ColumnProperty
+	private String followed;
+
+	...
+}
++---------------------------------------------------------------------------------------------+
+  
+   ** {Criação da interface <<<IUserDAO>>>}
+
+   * Estendendo a interface CassandraDAO, crie a interface correspondente à DAO que manipulará a entidade:
+
++---------------------------------------------------------------------------------------------+  
+public interface IFollowshipDAO extends CassandraDAO<Followship> {
+
+	List<String> findFollowingsLogins(String follower);
+
+	List<String> findFollowersLogins(String followed);
+
+}
++---------------------------------------------------------------------------------------------+
+
+   ** {Criação da classe <<<UserDAO>>>}
+
+   * Estendendo a classe JPAExtensionDAO e implementando a interface anterior, crie a classe contendo a implementação da DAO:
+ 
++---------------------------------------------------------------------------------------------+   
+public class FollowshipDAO extends CassandraColumnDAO<Followship>
+		implements IFollowshipDAO {
+
+	public List<String> findFollowingsLogins(String follower) {
+		return getColumns(follower);
+	}
+
+	public List<String> findFollowersLogins(String followed) {
+		return getColumnsBySecondary(followed);
+	}
+
+}
++---------------------------------------------------------------------------------------------+        
+
+   ** {hfjkgh lksjdfghl skdf}
+
+   * ....:
+ 
++---------------------------------------------------------------------------------------------+   
+public class TwitterFacade extends IFacade {
+
+	...
+    
+    @Injection
+	private IFollowshipDAO followshipDAO;
+    
+	...
+    
+	public Followship followUser(String login, String followed) {
+
+		Followship followship = new Followship();
+		followship.setFollower(login);
+		followship.setFollowed(followed);
+		
+		followshipDAO.save(followship);
+
+		return followship;
+	}
+
+	public void unfollowUser(String login, String followed) {
+
+		Followship followship = new Followship();
+		followship.setFollower(login);
+		followship.setFollowed(followed);
+		
+		followshipDAO.delete(followship);
+	}
+
+	public List<User> findUserFollowings(String login) {
+		
+		List<String> ids = followshipDAO.findFollowingsLogins(login);
+		
+		if (ids == null || ids.isEmpty())
+			return null;
+		
+		List<User> users = userDAO.findByLogins(ids);
+		
+		return users;
+	}
+
+	public List<User> findUserFollowers(String login) {
+		
+		List<String> ids = followshipDAO.findFollowersLogins(login);
+
+		if (ids == null || ids.isEmpty())
+			return null;
+		
+		List<User> users = userDAO.findByLogins(ids);
+		
+		return users;
+	}
+
+}
+
++---------------------------------------------------------------------------------------------+        
    
