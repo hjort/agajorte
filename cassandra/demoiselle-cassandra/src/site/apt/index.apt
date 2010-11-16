@@ -26,17 +26,38 @@
 
 Sobre Demoiselle Cassandra
 
- Componente adaptado ao <<Framework Demoiselle>> para implementação de persistência em servidores
- de bancos de dados distribuídos <<<Apache Cassandra>>>.
+  Componente adaptado ao <<Framework Demoiselle>> para implementação de persistência em servidores
+  de bancos de dados distribuídos <<Apache Cassandra>>, um exemplo de <<NoSQL>>.
+ 
+  O componente <<Demoiselle Cassandra>> fornece uma interface simplificada e altamente orientada a
+  objetos para lidar com dados oriundos do <<Apache Cassandra>>. Utilizando internamente a biblioteca
+  <<Hector>>, o desenvolvedor final não precisará utilizar diretamente a API de baixo nível <<Thrift>>.
    
- * Fornece as seguintes funcionalidades:
+ * A biblioteca fornece os seguintes artefatos:
    
+   * Interface genérica <<<CassandraDAO>>>
+   
+   * Classes utilitárias:
+   
+     * <<<CassandraEntityDAO>>>
+     
+     * <<<CassandraColumnDAO>>>
+     
+     []
+
    * Anotações de apoio:
    
-     * `@CassandraEntity`
-     * <@CassandraColumn>
-     * <<@KeyProperty>>
-     * ''@ColumnProperty''
-     * ``@ValueProperty``
+     * <<<@CassandraEntity>>>
+     
+     * <<<@CassandraColumn>>>
+     
+     * <<<@KeyProperty>>>
+     
+     * <<<@ColumnProperty>>>
+     
+     * <<<@ValueProperty>>>
 
-   * Interface genérica CassandraDAO e classes utilitárias CassandraEntityDAO e CassandraColumnDAO
+     []
+   
+   []
+   

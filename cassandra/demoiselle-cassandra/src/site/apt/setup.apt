@@ -28,7 +28,7 @@ Como Instalar
 
 * Adicionar dependência no Maven
 
-  Para instalar o componente basta adicionar a sua dependência no arquivo "pom.xml" da aplicação:
+  Para instalar o componente basta adicionar a sua dependência no arquivo <<<pom.xml>>> da aplicação:
   
 +---------------------------------------------------------------------------------------------+
 <dependencies>
@@ -43,29 +43,24 @@ Como Instalar
 * Configurar plug-in do AspectJ
 
   Para usufruir de recursos como a injeção de dependências, é preciso também incluir o artefato
-  demoiselle-cassandra nas bibliotecas do plug-in do AspectJ, tal como ilustrado a seguir:
+  <<<demoiselle-cassandra>>> nas bibliotecas do plug-in do AspectJ, tal como ilustrado a seguir:
 
 +---------------------------------------------------------------------------------------------+  
-<build>
-	<plugins>
-		<plugin>
-			<groupId>org.codehaus.mojo</groupId>
-			<artifactId>aspectj-maven-plugin</artifactId>
-			<version>1.0</version>
-			<configuration>
-				...
-				<aspectLibraries>
-					...
-					<aspectLibrary>
-						<groupId>br.gov.frameworkdemoiselle</groupId>
-						<artifactId>demoiselle-cassandra</artifactId>
-					</aspectLibrary>
-				</aspectLibraries>
-			</configuration>
+<plugin>
+	<groupId>org.codehaus.mojo</groupId>
+	<artifactId>aspectj-maven-plugin</artifactId>
+	<version>1.0</version>
+	<configuration>
+		...
+		<aspectLibraries>
 			...
-		</plugin>
-		...			
-	</plugins>
-</build>
+			<aspectLibrary>
+				<groupId>br.gov.frameworkdemoiselle</groupId>
+				<artifactId>demoiselle-cassandra</artifactId>
+			</aspectLibrary>
+		</aspectLibraries>
+	</configuration>
+	...
+</plugin>
 +---------------------------------------------------------------------------------------------+  
 	
