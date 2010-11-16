@@ -1,0 +1,71 @@
+~~Demoiselle Framework
+~~Copyright (c) 2010 SERPRO and other contributors as indicated by the @author tag.
+~~
+~~Demoiselle Framework is an open source Java EE library designed to accelerate
+~~the development of transactional database Web applications.
+~~
+~~Demoiselle Framework is released under the terms of the LGPL license 3
+~~http://www.gnu.org/licenses/lgpl.html  LGPL License 3
+~~
+~~This file is part of Demoiselle Framework.
+~~
+~~Demoiselle Framework is free software: you can redistribute it and/or modify
+~~it under the terms of the GNU Lesser General Public License 3 as published by
+~~the Free Software Foundation.
+~~
+~~Demoiselle Framework is distributed in the hope that it will be useful,
+~~but WITHOUT ANY WARRANTY; without even the implied warranty of
+~~MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+~~GNU Lesser General Public License for more details.
+~~
+~~You should have received a copy of the GNU Lesser General Public License
+~~along with Demoiselle Framework.  If not, see <http://www.gnu.org/licenses/>.
+  
+                                    ------
+                                    Como Instalar
+                                    
+Como Instalar
+
+* Adicionar dependência no Maven
+
+  Para instalar o componente basta adicionar a sua dependência no arquivo "pom.xml" da aplicação:
+  
++---------------------------------------------------------------------------------------------+
+<dependencies>
+	<dependency>
+		<groupId>br.gov.component.demoiselle</groupId>
+		<artifactId>demoiselle-cassandra</artifactId>
+		<version>1.0.0</version>
+	</dependency>
+</dependencies>
++---------------------------------------------------------------------------------------------+  
+
+* Configurar plug-in do AspectJ
+
+  Para usufruir de recursos como a injeção de dependências, é preciso também incluir o artefato
+  demoiselle-cassandra nas bibliotecas do plug-in do AspectJ, tal como ilustrado a seguir:
+
++---------------------------------------------------------------------------------------------+  
+<build>
+	<plugins>
+		<plugin>
+			<groupId>org.codehaus.mojo</groupId>
+			<artifactId>aspectj-maven-plugin</artifactId>
+			<version>1.0</version>
+			<configuration>
+				...
+				<aspectLibraries>
+					...
+					<aspectLibrary>
+						<groupId>br.gov.frameworkdemoiselle</groupId>
+						<artifactId>demoiselle-cassandra</artifactId>
+					</aspectLibrary>
+				</aspectLibraries>
+			</configuration>
+			...
+		</plugin>
+		...			
+	</plugins>
+</build>
++---------------------------------------------------------------------------------------------+  
+	

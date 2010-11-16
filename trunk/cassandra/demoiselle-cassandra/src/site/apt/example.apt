@@ -22,26 +22,27 @@
 ~~along with Demoiselle Framework.  If not, see <http://www.gnu.org/licenses/>.
   
                                     ------
-                                    Documentação
+                                    Exemplo de Uso
                                     
-Documentação
+Exemplo de Uso
 
-* Como instalar
+%{toc|section=1|fromDepth=1|toDepth=3}
 
-  Para instalar o componente basta adicionar a sua dependência no arquivo "pom.xml":
+* {Modelo de dados}
+
+  ...
   
-+---------------------------------------------------------------------------------------------+
-<dependencies>
-	<dependency>
-		<groupId>br.gov.component.demoiselle</groupId>
-		<artifactId>demoiselle-cassandra</artifactId>
-		<version>1.0.0</version>
-	</dependency>
-</dependencies>
-+---------------------------------------------------------------------------------------------+  
+[images/twitter-model1.png] Modelo de dados 1
+  
+  ...
 
+[images/twitter-model2.png] Modelo de dados 2
+  
+  ...
 
-** Programação - JPAExtensionDAO
+* {Persistência de entidade simples}
+
+   ** {hfjkgh lksjdfghl skdf}
 
    * Crie a classe correspondente à entidade com as devidas anotações da JPA:
    
@@ -63,6 +64,8 @@ public class User {
 }
 +---------------------------------------------------------------------------------------------+
   
+   ** {hfjkgh lksjdfghl skdf}
+
    * Estendendo a interface CassandraDAO, crie a interface correspondente à DAO que manipulará a entidade:
 
 +---------------------------------------------------------------------------------------------+  
@@ -78,6 +81,8 @@ public interface IUserDAO extends CassandraDAO<User> {
 
 }
 +---------------------------------------------------------------------------------------------+
+
+   ** {hfjkgh lksjdfghl skdf}
 
    * Estendendo a classe JPAExtensionDAO e implementando a interface anterior, crie a classe contendo a implementação da DAO:
  
@@ -99,6 +104,8 @@ public class UserDAO extends CassandraEntityDAO<User> implements IUserDAO {
 }
 
 +---------------------------------------------------------------------------------------------+        
+
+   ** {hfjkgh lksjdfghl skdf}
 
    * ....:
  
@@ -133,3 +140,7 @@ public class TwitterFacade extends IFacade {
 
 +---------------------------------------------------------------------------------------------+        
 
+* {Persistência de coluna}
+
+   ...
+   
