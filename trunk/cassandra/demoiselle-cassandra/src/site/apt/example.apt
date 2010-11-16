@@ -40,6 +40,7 @@ Exemplo de Uso
   
   ...
 
+
 * {Persistência de entidade simples}
 
    * {Criação da entidade <<<User>>>}
@@ -125,6 +126,7 @@ public class TwitterFacade extends IFacade {
 }
 +---------------------------------------------------------------------------------------------+        
 
+
 * {Persistência de coluna}
 
    ...
@@ -190,7 +192,7 @@ public class TwitterFacade extends IFacade {
 
 	...
     
-    @Injection
+	@Injection
 	private IFollowshipDAO followshipDAO;
     
 	...
@@ -243,3 +245,252 @@ public class TwitterFacade extends IFacade {
 
 +---------------------------------------------------------------------------------------------+        
    
+* {Persistência de entidade simples ...}
+
+   * {Criação da entidade <<<User>>>}
+
+   * Crie a classe correspondente à entidade com as devidas anotações da JPA:
+   
++---------------------------------------------------------------------------------------------+  
+@CassandraEntity(keyspace = "Twitter", columnFamily = "Tweets")
+public class Tweet {
+
+	@KeyProperty
+	private Long id;
+	
+	private String user;
+	private String text;
+
+	...
+}
++---------------------------------------------------------------------------------------------+
+
+   * Crie a classe ...
+   
++---------------------------------------------------------------------------------------------+  
+@CassandraColumn(keyspace = "Twitter", columnFamily = "Userline")
+public class UserLine implements TweetLine {
+
+	@KeyProperty
+	private String user;
+	
+	@ColumnProperty
+	private Long time;
+	
+	@ValueProperty
+	private Long tweet;
+	
+	...
+}
++---------------------------------------------------------------------------------------------+
+
+   * Crie a classe ...
+   
++---------------------------------------------------------------------------------------------+  
+@CassandraColumn(keyspace = "Twitter", columnFamily = "Timeline")
+public class TimeLine implements TweetLine {
+
+	@KeyProperty
+	private String user;
+
+	@ColumnProperty
+	private Long time;
+	
+	@ValueProperty
+	private Long tweet;
+
+	...
+}
++---------------------------------------------------------------------------------------------+
+  
+   ** {Criação da interface <<<IUserDAO>>>}
+
+   * Estendendo a interface CassandraDAO, crie a interface correspondente à DAO que manipulará a entidade:
+
++---------------------------------------------------------------------------------------------+  
+public interface ITweetDAO extends CassandraDAO<Tweet> {
+
+	Tweet findById(Long id);
+
+	List<Tweet> findByIds(Iterable<Long> ids);
+
+}
++---------------------------------------------------------------------------------------------+
+
+   * Estendendo a interface CassandraDAO, crie a interface correspondente à DAO que manipulará a entidade:
+
++---------------------------------------------------------------------------------------------+  
+public interface IUserLineDAO extends CassandraDAO<UserLine> {
+
+	List<Long> findUserLine(String user);
+
+}
++---------------------------------------------------------------------------------------------+  
+
+   * Estendendo a interface CassandraDAO, crie a interface correspondente à DAO que manipulará a entidade:
+
++---------------------------------------------------------------------------------------------+  
+public interface ITimeLineDAO extends CassandraDAO<TimeLine> {
+	
+	List<Long> findTimeLine(String user);
+
+}
++---------------------------------------------------------------------------------------------+  
+
+   ** {Criação da classe <<<UserDAO>>>}
+
+   * Estendendo a classe JPAExtensionDAO e implementando a interface anterior, crie a classe contendo a implementação da DAO:
+ 
++---------------------------------------------------------------------------------------------+   
+public class TweetDAO extends CassandraEntityDAO<Tweet> implements ITweetDAO {
+
+	public Tweet findById(Long id) {
+		return get(id.toString());
+	}
+
+	public List<Tweet> findByIds(Iterable<Long> ids) {
+		return get(Iterables.transform(ids, Functions.toStringFunction()));
+	}
+
+}
++---------------------------------------------------------------------------------------------+        
+
+   * Estendendo a classe JPAExtensionDAO e implementando a interface anterior, crie a classe contendo a implementação da DAO:
+ 
++---------------------------------------------------------------------------------------------+   
+public class UserLineDAO extends CassandraColumnDAO<UserLine> implements IUserLineDAO {
+
+	public List<Long> findUserLine(String user) {
+		
+		List<String> values = getValues(user);
+		
+		if (values == null || values.isEmpty())
+			return null;
+		
+		List<Long> tweets = Lists.transform(values, new Function<String, Long>() {
+			public Long apply(String from) {
+				return Long.parseLong(from);
+			}
+		});
+		
+		return tweets;
+	}
+
+}
++---------------------------------------------------------------------------------------------+        
+
+   * Estendendo a classe JPAExtensionDAO e implementando a interface anterior, crie a classe contendo a implementação da DAO:
+ 
++---------------------------------------------------------------------------------------------+   
+public class TimeLineDAO extends CassandraColumnDAO<TimeLine> implements ITimeLineDAO {
+
+	public List<Long> findTimeLine(String user) {
+		
+		List<String> values = getValues(user);
+		
+		if (values == null || values.isEmpty())
+			return null;
+		
+		List<Long> tweets = Lists.transform(values, new Function<String, Long>() {
+			public Long apply(String from) {
+				return Long.parseLong(from);
+			}
+		});
+		
+		return tweets;
+	}
+
+}
++---------------------------------------------------------------------------------------------+        
+
+   ** {hfjkgh lksjdfghl skdf}
+
+   * ....:
+ 
++---------------------------------------------------------------------------------------------+   
+public class TwitterFacade extends IFacade {
+
+	...
+    
+	@Injection
+	private ITweetDAO tweetDAO;
+	
+	@Injection
+	private IUserLineDAO userlineDAO;
+	
+	@Injection
+	private ITimeLineDAO timelineDAO;
+    
+	...
+
+	public Tweet postTweet(String login, String text) {
+
+		final long id = (long) (Math.random() * 1E10);
+
+		Tweet tweet = new Tweet();
+		tweet.setId(id);
+		tweet.setUser(login);
+		tweet.setText(text);
+		
+		tweetDAO.save(tweet);
+		
+		final long timestamp = System.currentTimeMillis();
+
+		UserLine userline = new UserLine();
+		userline.setUser(login);
+		userline.setTime(timestamp);
+		userline.setTweet(id);
+		userlineDAO.save(userline);
+
+		List<String> logins = followshipDAO.findFollowersLogins(login);
+		if (logins != null) {
+			TimeLine timeline = null;
+			for (String follower : logins) {
+				timeline = new TimeLine();
+				timeline.setUser(follower);
+				timeline.setTime(timestamp);
+				timeline.setTweet(id);
+				timelineDAO.save(timeline);
+			}
+		}
+
+		return tweet;
+	}
+
+	public void removeTweet(Long id) {
+		Tweet tweet = tweetDAO.findById(id);
+		tweetDAO.delete(tweet);
+	}
+
+	public Tweet findTweet(Long id) {
+		Tweet tweet = tweetDAO.findById(id);
+		return tweet;
+	}
+
+	public List<Tweet> findUserLastTweets(String login, int count) {
+
+		List<Long> ids1 = userlineDAO.findUserLine(login);
+		List<Long> ids2 = timelineDAO.findTimeLine(login);
+		
+		List<Long> ids = new ArrayList<Long>();
+		if (ids1 != null)
+			ids.addAll(ids1);
+		if (ids2 != null)
+			ids.addAll(ids2);
+		
+		if (ids == null || ids.isEmpty())
+			return null;
+		
+		List<Tweet> tweets = tweetDAO.findByIds(ids);
+
+		// TODO: ordernar pelo timestamp e limitar a quantidade de ocorrências (count)
+		
+		return tweets;
+	}
+
+	public List<Tweet> findUserLastTweets(String login) {
+		return findUserLastTweets(login, TWEETS_DEFAULT_COUNT);
+	}
+	
+}
++---------------------------------------------------------------------------------------------+        
