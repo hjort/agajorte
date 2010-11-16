@@ -1,0 +1,135 @@
+~~Demoiselle Framework
+~~Copyright (c) 2010 SERPRO and other contributors as indicated by the @author tag.
+~~
+~~Demoiselle Framework is an open source Java EE library designed to accelerate
+~~the development of transactional database Web applications.
+~~
+~~Demoiselle Framework is released under the terms of the LGPL license 3
+~~http://www.gnu.org/licenses/lgpl.html  LGPL License 3
+~~
+~~This file is part of Demoiselle Framework.
+~~
+~~Demoiselle Framework is free software: you can redistribute it and/or modify
+~~it under the terms of the GNU Lesser General Public License 3 as published by
+~~the Free Software Foundation.
+~~
+~~Demoiselle Framework is distributed in the hope that it will be useful,
+~~but WITHOUT ANY WARRANTY; without even the implied warranty of
+~~MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+~~GNU Lesser General Public License for more details.
+~~
+~~You should have received a copy of the GNU Lesser General Public License
+~~along with Demoiselle Framework.  If not, see <http://www.gnu.org/licenses/>.
+  
+                                    ------
+                                    Documentação
+                                    
+Documentação
+
+* Como instalar
+
+  Para instalar o componente basta adicionar a sua dependência no arquivo "pom.xml":
+  
++---------------------------------------------------------------------------------------------+
+<dependencies>
+	<dependency>
+		<groupId>br.gov.component.demoiselle</groupId>
+		<artifactId>demoiselle-cassandra</artifactId>
+		<version>1.0.0</version>
+	</dependency>
+</dependencies>
++---------------------------------------------------------------------------------------------+  
+
+
+** Programação - JPAExtensionDAO
+
+   * Crie a classe correspondente à entidade com as devidas anotações da JPA:
+   
++---------------------------------------------------------------------------------------------+  
+package app.bean;
+
+...
+
+@CassandraEntity(keyspace = "Twitter", columnFamily = "Users")
+public class User {
+
+	@KeyProperty
+	private String login;
+	
+	private String name;
+	private String password;
+
+    ...
+}
++---------------------------------------------------------------------------------------------+
+  
+   * Estendendo a interface CassandraDAO, crie a interface correspondente à DAO que manipulará a entidade:
+
++---------------------------------------------------------------------------------------------+  
+package app.persistence;
+
+...
+
+public interface IUserDAO extends CassandraDAO<User> {
+
+	User findByLogin(String login);
+
+	List<User> findByLogins(Iterable<String> logins);
+
+}
++---------------------------------------------------------------------------------------------+
+
+   * Estendendo a classe JPAExtensionDAO e implementando a interface anterior, crie a classe contendo a implementação da DAO:
+ 
++---------------------------------------------------------------------------------------------+   
+package app.persistence.impl;
+
+...
+
+public class UserDAO extends CassandraEntityDAO<User> implements IUserDAO {
+	
+	public User findByLogin(String login) {
+		return get(login);
+	}
+
+	public List<User> findByLogins(Iterable<String> logins) {
+		return get(logins);
+	}
+
+}
+
++---------------------------------------------------------------------------------------------+        
+
+   * ....:
+ 
++---------------------------------------------------------------------------------------------+   
+package app.business.impl;
+
+...
+
+public class TwitterFacade extends IFacade {
+
+	public User createUser(String login, String name, String password) {
+		
+		User user = new User();
+		user.setLogin(login);
+		user.setName(name);
+		user.setPassword(password);
+		
+		userDAO.save(user);
+		
+		return user;
+	}
+
+	public void removeUser(String login) {
+		userDAO.delete(new User(login));
+	}
+
+	public User findUserByLogin(String login) {
+		return userDAO.findByLogin(login);
+	}
+
+}
+
++---------------------------------------------------------------------------------------------+        
+
