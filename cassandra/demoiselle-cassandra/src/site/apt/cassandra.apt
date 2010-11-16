@@ -73,6 +73,14 @@ Apache Cassandra
   O Cassandra foi inicialmente criado pelo <<Facebook>>, tendo seu código fonte liberado para a <<Fundação Apache>> em 2008. Desde
   então é mantido por esta através de desenvolvedores e contribuidores de diversas empresas.
   
+  Eis as referências para os trabalhos que inspiraram o Cassandra:
+  
+  * {{{http://labs.google.com/papers/bigtable-osdi06.pdf}Bigtable: A Distributed Storage System for Structured Data - Chang et al (Google) - 7th OSDI (2006)}}
+  
+  * {{{http://s3.amazonaws.com/AllThingsDistributed/sosp/amazon-dynamo-sosp2007.pdf}Dynamo: Amazon's Highly Available Key-value Store - DeCandia et al (Amazon.com) - ACM 21st SOSP (2007)}}
+  
+  []
+
   
 * {Um novo modelo de dados}
 

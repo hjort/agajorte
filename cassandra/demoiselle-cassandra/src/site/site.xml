@@ -54,7 +54,7 @@
 
 		<menu name="${project.name}">
 			<item name="Sobre" href="index.html" />
-			<item name="Cassandra" href="cassandra.html" />
+			<item name="Apache Cassandra" href="cassandra.html" />
 			<item name="Como Instalar" href="setup.html" />
 			<item name="Exemplo de Uso" href="example.html" />
 			<item name="Notas de Versão" href="release-notes.html" />
