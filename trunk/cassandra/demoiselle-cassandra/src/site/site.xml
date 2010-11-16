@@ -60,7 +60,7 @@
 			<item name="Notas de Versão" href="release-notes.html" />
 		</menu>
 		
-		<menu ref="reports"/>
+<!--		<menu ref="reports"/>-->
 		
 	</body>
 	
