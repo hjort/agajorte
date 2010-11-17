@@ -26,12 +26,12 @@
                                     
 Sobre Demoiselle Cassandra
 
- Componente adaptado ao Framework Demoiselle para implementação de persistência em servidores
- de bancos de dados distribuídos Apache Cassandra.
+  Componente adaptado ao Framework Demoiselle para implementação de persistência em servidores
+  de bancos de dados distribuídos Apache Cassandra.
    
- * Fornece as seguintes funcionalidades:
+  Fornece as seguintes funcionalidades:
    
-   * Anotações de apoio @CassandraEntity, @CassandraColumn, @KeyProperty, @ColumnProperty e @ValueProperty 
-
-   * Interface genérica CassandraDAO<T> e classes utilitárias CassandraEntityDAO e CassandraColumnDAO
+  * Interface genérica CassandraDAO e classes utilitárias CassandraEntityDAO e CassandraColumnDAO
+   
+  * Anotações de apoio @CassandraEntity, @CassandraColumn, @KeyProperty, @ColumnProperty e @ValueProperty 
    
