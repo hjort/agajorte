@@ -127,20 +127,29 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.5</version>
 			</plugin>
+			-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
-				<version>2.2-beta-5</version>
+				<version>2.2</version>
 				<configuration>
-					<outputDirectory>${project.build.directory}/assembly
-					</outputDirectory>
-					<descriptors>
-						<descriptor>src/main/assembly/bin.xml</descriptor>
-						<descriptor>src/main/assembly/src.xml</descriptor>
-					</descriptors>
+					<outputDirectory>${project.build.directory}/assembly</outputDirectory>
+					<descriptorRefs>
+						<descriptorRef>src</descriptorRef>
+					</descriptorRefs>
 					<appendAssemblyId>true</appendAssemblyId>
 				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
+			<!-- 
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>wagon-maven-plugin</artifactId>
