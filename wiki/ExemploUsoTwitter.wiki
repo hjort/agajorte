@@ -8,21 +8,22 @@ Para ilustrar a modelagem de dados orientada a colunas fornecida pelo *Apache Ca
 As famílias de colunas (column families) envolvidas estão ilustradas a seguir:
 
   * *Users*: usuários cadastrados na aplicação
-  * *Following: lista de pessoas seguidas para cada usuário
-  * *Followers: lista de seguidores para cada usuário
+  * *Following*: lista de pessoas seguidas para cada usuário
+  * *Followers*: lista de seguidores para cada usuário
 
-  * *Tweets (ou Statuses): lista de mensagens (ou tweets)
-  * *Timeline: linha do tempo para cada usuário, ou seja, lista de mensagens de todos as pessoas que ele segue
-  * *Userline: linha de cada usuário, isto é, lista de mensagens incluídas pelo próprio usuário
+  * *Tweets* (ou *Statuses*): lista de mensagens (ou tweets)
+  * *Timeline*: linha do tempo para cada usuário, ou seja, lista de mensagens de todos as pessoas que ele segue
+  * *Userline*: linha de cada usuário, isto é, lista de mensagens incluídas pelo próprio usuário
 
 = Persistência de entidade (Users) =
 
 == Criação da entidade User ==
 
-A classe correspondente à entidade User armazenará objetos Java que serão inteiramente persistidos na família de colunas Users pertencente ao keyspace Twitter do Apache Cassandra.
+A classe correspondente à entidade `User` armazenará objetos Java que serão inteiramente persistidos na família de colunas `Users` pertencente ao keyspace `Twitter` do *Apache Cassandra*.
 
-Para implementar essa classe, são usadas as anotações @CassandraEntity (para definir que a primeira trata-se de uma entidade) e @KeyProperty (para definir a propriedade referente à chave na família de colunas).
+Para implementar essa classe, são usadas as anotações `@CassandraEntity` (para definir que a primeira trata-se de uma entidade) e `@KeyProperty` (para definir a propriedade referente à chave na família de colunas).
 
+{{{
 @CassandraEntity(keyspace = "Twitter", columnFamily = "Users")
 public class User {
 
@@ -34,11 +35,13 @@ public class User {
 
         ...
 }
+}}}
 
 == Criação da interface IUserDAO ==
 
-Neste caso, é preciso criar a interface IUserDAO estendendo a interface genérica CassandraDAO e na primeira adicionar os métodos específicos da regra de negócio:
+Neste caso, é preciso criar a interface `IUserDAO` estendendo a interface genérica `CassandraDAO` e na primeira adicionar os métodos específicos da regra de negócio:
 
+{{{
 public interface IUserDAO extends CassandraDAO<User> {
 
         User findByLogin(String login);
@@ -46,11 +49,13 @@ public interface IUserDAO extends CassandraDAO<User> {
         List<User> findByLogins(Iterable<String> logins);
 
 }
+}}}
 
 == Criação da classe UserDAO ==
 
-A classe UserDAO trata-se de uma implementação da interface IUserDAO, além de derivar da superclasse CassandraEntityDAO, a qual fornece métodos para a manipulação dos dados:
+A classe `UserDAO` trata-se de uma implementação da interface `IUserDAO`, além de derivar da superclasse `CassandraEntityDAO`, a qual fornece métodos para a manipulação dos dados:
 
+{{{
 public class UserDAO extends CassandraEntityDAO<User> implements IUserDAO {
         
         public User findByLogin(String login) {
@@ -62,13 +67,15 @@ public class UserDAO extends CassandraEntityDAO<User> implements IUserDAO {
         }
 
 }
+}}}
 
 == Criação da classe TwitterFacade ==
 
-A classe TwitterFacade implementa a interface IFacade, que por sua vez torna possível a injeção de dependências de variáveis anotadas com @Injection.
+A classe `TwitterFacade` implementa a interface `IFacade`, que por sua vez torna possível a injeção de dependências de variáveis anotadas com `@Injection`.
 
-Veja no código a seguir a implementação da classe TwitterFacade com seus respectivos métodos para criação, remoção e busca de usuários.
+Veja no código a seguir a implementação da classe `TwitterFacade` com seus respectivos métodos para criação, remoção e busca de usuários.
 
+{{{
 public class TwitterFacade extends IFacade {
 
         @Injection
@@ -95,17 +102,19 @@ public class TwitterFacade extends IFacade {
         }
 
 }
+}}}
 
-== Persistência de coluna dupla (Following, Followers) ==
+= Persistência de coluna dupla (Following, Followers) =
 
-Neste outro caso, uma informação precisa ser persistida de forma diferente em duas famílias de colunas, Following e Followers. O que difere uma de outra é a indexação, ou seja, como o dado será disposto na família de colunas.
+Neste outro caso, uma informação precisa ser persistida de forma diferente em duas famílias de colunas, `Following` e `Followers`. O que difere uma de outra é a indexação, ou seja, como o dado será disposto na família de colunas.
 
-Criação da entidade Followship
+== Criação da entidade Followship ==
 
-A classe Followship armazenará a ligação entre um usuário (o seguidor, ou follower) a um outro (o seguido, ou followed). Para isso, é preciso utilizar a anotação @CassandraColumn, indicando nesta as famílias de colunas primária (Following) e secundária (Followers). Essa anotação também define o keyspace a ser utilizado.
+A classe `Followship` armazenará a ligação entre um usuário (o seguidor, ou follower) a um outro (o seguido, ou followed). Para isso, é preciso utilizar a anotação `@CassandraColumn`, indicando nesta as famílias de colunas primária (`Following`) e secundária (`Followers`). Essa anotação também define o keyspace a ser utilizado.
 
-As propriedades devem ser anotadas com @KeyProperty e @ColumnProperty.
+As propriedades devem ser anotadas com `@KeyProperty` e `@ColumnProperty`.
 
+{{{
 @CassandraColumn(keyspace = "Twitter", columnFamily = "Following",
                 secondaryColumnFamily = "Followers")
 public class Followship {
@@ -118,11 +127,13 @@ public class Followship {
 
         ...
 }
+}}}
 
 == Criação da interface IFollowshipDAO ==
 
-Tal como anteriormente, é preciso criar a interface IFollowshipDAO estendendo a interface genérica CassandraDAO e na primeira adicionar os métodos específicos da regra de negócio:
+Tal como anteriormente, é preciso criar a interface `IFollowshipDAO` estendendo a interface genérica `CassandraDAO` e na primeira adicionar os métodos específicos da regra de negócio:
 
+{{{
 public interface IFollowshipDAO extends CassandraDAO<Followship> {
 
         List<String> findFollowingsLogins(String follower);
@@ -130,11 +141,13 @@ public interface IFollowshipDAO extends CassandraDAO<Followship> {
         List<String> findFollowersLogins(String followed);
 
 }
+}}}
 
 == Criação da classe FollowshipDAO ==
 
-A classe FollowshipDAO também trata-se de uma implementação da interface IUserDAO, porém deriva da superclasse CassandraColumnDAO, a qual fornece métodos para a manipulação dos dados no formato de colunas:
+A classe `FollowshipDAO` também trata-se de uma implementação da interface `CassandraDAO`, porém deriva da superclasse `CassandraColumnDAO`, a qual fornece métodos para a manipulação dos dados no formato de colunas:
 
+{{{
 public class FollowshipDAO extends CassandraColumnDAO<Followship>
                 implements IFollowshipDAO {
 
@@ -147,11 +160,13 @@ public class FollowshipDAO extends CassandraColumnDAO<Followship>
         }
 
 }
+}}}
 
 == Modificação da classe TwitterFacade ==
 
-A classe TwitterFacade deve ser modificada para poder realizar operações como follow, unfollow e recuperação de lista de seguidos e seguidores de um usuário.
+A classe `TwitterFacade` deve ser modificada para poder realizar operações como follow, unfollow e recuperação de lista de seguidos e seguidores de um usuário.
 
+{{{
 public class TwitterFacade extends IFacade {
 
         ...
@@ -206,13 +221,15 @@ public class TwitterFacade extends IFacade {
         }
 
 }
+}}}
 
 = Persistência de entidade e colunas (Tweets, UserLine, TimeLine) =
 
 == Criação da entidade Tweet ==
 
-É preciso criar a entidade Tweet destinada a armazenar as mensagens emitidas pelos usuários. Neste caso, será empregada a anotação @CassandraEntity indicando a família de colunas Tweets e @KeyProperty para definir o campo a ser usado como chave.
+É preciso criar a entidade `Tweet` destinada a armazenar as mensagens emitidas pelos usuários. Neste caso, será empregada a anotação `@CassandraEntity` indicando a família de colunas `Tweets` e `@KeyProperty` para definir o campo a ser usado como chave.
 
+{{{
 @CassandraEntity(keyspace = "Twitter", columnFamily = "Tweets")
 public class Tweet {
 
@@ -224,11 +241,13 @@ public class Tweet {
 
         ...
 }
+}}}
 
-A fim de poder futuramente recuperar a lista de mensagens incluídas por um usuário, precisamos de uma estrutura adicional, a família de colunas Userline, a qual será indexada pelo respectivo usuário.
+A fim de poder futuramente recuperar a lista de mensagens incluídas por um usuário, precisamos de uma estrutura adicional, a família de colunas `Userline`, a qual será indexada pelo respectivo usuário.
 
-Para isso, crie a classe UserLine utilizando nela a anotação @CassandraColumn e em seus campos as anotações @KeyProperty, @ColumnProperty e @ValueProperty.
+Para isso, crie a classe `UserLine` utilizando nela a anotação `@CassandraColumn` e em seus campos as anotações `@KeyProperty`, `@ColumnProperty` e `@ValueProperty`.
 
+{{{
 @CassandraColumn(keyspace = "Twitter", columnFamily = "Userline")
 public class UserLine implements TweetLine {
 
@@ -243,11 +262,13 @@ public class UserLine implements TweetLine {
         
         ...
 }
+}}}
 
-Para armazenar a lista de mensagens incluídas pelos usuários que alguém segue, é preciso ainda de uma terceira estrutura, a família de colunas Timeline, a qual será indexada pelo usuário dito seguidor.
+Para armazenar a lista de mensagens incluídas pelos usuários que alguém segue, é preciso ainda de uma terceira estrutura, a família de colunas `Timeline`, a qual será indexada pelo usuário dito seguidor.
 
-Crie a classe TimeLine fazendo uso da anotação @CassandraColumn e em suas propriedades as anotações @KeyProperty, @ColumnProperty e @ValueProperty.
+Crie a classe `TimeLine` fazendo uso da anotação `@CassandraColumn` e em suas propriedades as anotações `@KeyProperty`, `@ColumnProperty` e `@ValueProperty`.
 
+{{{
 @CassandraColumn(keyspace = "Twitter", columnFamily = "Timeline")
 public class TimeLine implements TweetLine {
 
@@ -262,11 +283,13 @@ public class TimeLine implements TweetLine {
 
         ...
 }
+}}}
 
 == Criação das interfaces ITweetDAO, IUserLineDAO e ITimeLineDAO ==
 
-É preciso criar as interfaces ITweetDAO, IUserLineDAO e ITimeLineDAO estendendo a interface genérica CassandraDAO e nelas adicionar os métodos específicos da regra de negócio:
+É preciso criar as interfaces `ITweetDAO`, `IUserLineDAO` e `ITimeLineDAO` estendendo a interface genérica `CassandraDAO` e nelas adicionar os métodos específicos da regra de negócio:
 
+{{{
 public interface ITweetDAO extends CassandraDAO<Tweet> {
 
         Tweet findById(Long id);
@@ -274,23 +297,29 @@ public interface ITweetDAO extends CassandraDAO<Tweet> {
         List<Tweet> findByIds(Iterable<Long> ids);
 
 }
+}}}
 
+{{{
 public interface IUserLineDAO extends CassandraDAO<UserLine> {
 
         List<Long> findUserLine(String user);
 
 }
+}}}
 
+{{{
 public interface ITimeLineDAO extends CassandraDAO<TimeLine> {
         
         List<Long> findTimeLine(String user);
 
 }
+}}}
 
 == Criação das classes TweetDAO, UserLineDAO e TimeLineDAO ==
 
-A classe FollowshipDAO também trata-se de uma implementação da interface IUserDAO, porém deriva da superclasse CassandraColumnDAO, a qual fornece métodos para a manipulação dos dados no formato de colunas:
+A classe `FollowshipDAO` também trata-se de uma implementação da interface `CassandraDAO`, porém deriva da superclasse `CassandraColumnDAO`, a qual fornece métodos para a manipulação dos dados no formato de colunas:
 
+{{{
 public class TweetDAO extends CassandraEntityDAO<Tweet> implements ITweetDAO {
 
         public Tweet findById(Long id) {
@@ -302,9 +331,11 @@ public class TweetDAO extends CassandraEntityDAO<Tweet> implements ITweetDAO {
         }
 
 }
+}}}
 
-A classe FollowshipDAO também trata-se de uma implementação da interface IUserDAO, porém deriva da superclasse CassandraColumnDAO, a qual fornece métodos para a manipulação dos dados no formato de colunas:
+A classe `UserLineDAO` também trata-se de uma implementação da interface `CassandraDAO`, porém deriva da superclasse `CassandraColumnDAO`, a qual fornece métodos para a manipulação dos dados no formato de colunas:
 
+{{{
 public class UserLineDAO extends CassandraColumnDAO<UserLine>
                 implements IUserLineDAO {
 
@@ -326,9 +357,11 @@ public class UserLineDAO extends CassandraColumnDAO<UserLine>
         }
 
 }
+}}}
 
-A classe FollowshipDAO também trata-se de uma implementação da interface IUserDAO, porém deriva da superclasse CassandraColumnDAO, a qual fornece métodos para a manipulação dos dados no formato de colunas:
+A classe `TimeLineDAO` também trata-se de uma implementação da interface `CassandraDAO`, porém deriva da superclasse `CassandraColumnDAO`, a qual fornece métodos para a manipulação dos dados no formato de colunas:
 
+{{{
 public class TimeLineDAO extends CassandraColumnDAO<TimeLine>
                 implements ITimeLineDAO {
 
@@ -350,11 +383,13 @@ public class TimeLineDAO extends CassandraColumnDAO<TimeLine>
         }
 
 }
+}}}
 
 == Modificação da classe TwitterFacade ==
 
-A classe TwitterFacade deve ser modificada para poder realizar operações como postagem (inclusão de mensagem), remoção de mensagem, busca de mensagem e listagem de mensagens para determinado usuário.
+A classe `TwitterFacade` deve ser modificada para poder realizar operações como postagem (inclusão de mensagem), remoção de mensagem, busca de mensagem e listagem de mensagens para determinado usuário.
 
+{{{
 public class TwitterFacade extends IFacade {
 
         ...
@@ -438,3 +473,4 @@ public class TwitterFacade extends IFacade {
         }
         
 }
+}}}
