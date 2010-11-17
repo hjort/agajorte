@@ -7,9 +7,13 @@ Para ilustrar a modelagem de dados orientada a colunas fornecida pelo *Apache Ca
 
 As famílias de colunas (column families) envolvidas estão ilustradas a seguir:
 
+http://demoiselle.sourceforge.net/component/demoiselle-cassandra/1.0.0-RC1/images/twitter-model1.png
+
   * *Users*: usuários cadastrados na aplicação
   * *Following*: lista de pessoas seguidas para cada usuário
   * *Followers*: lista de seguidores para cada usuário
+
+http://demoiselle.sourceforge.net/component/demoiselle-cassandra/1.0.0-RC1/images/twitter-model2.png
 
   * *Tweets* (ou *Statuses*): lista de mensagens (ou tweets)
   * *Timeline*: linha do tempo para cada usuário, ou seja, lista de mensagens de todos as pessoas que ele segue
