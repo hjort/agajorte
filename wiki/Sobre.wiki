@@ -13,10 +13,10 @@ A biblioteca fornece os seguintes artefatos:
     ** CassandraEntityDAO
     ** CassandraColumnDAO
   * Anotações de apoio:
-    ** @CassandraEntity
-    ** @CassandraColumn
-    ** @KeyProperty
-    ** @ColumnProperty
-    ** @ValueProperty
-    ** @SuperColumnProperty
-    ** @Transient
+    ** @CassandraEntity 
+    ** @CassandraColumn 
+    ** @KeyProperty 
+    ** @ColumnProperty 
+    ** @ValueProperty 
+    ** @SuperColumnProperty 
+    ** @Transient 
