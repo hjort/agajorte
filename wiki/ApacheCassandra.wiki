@@ -3,6 +3,8 @@
 
 = O que é NoSQL? =
 
+http://demoiselle.sourceforge.net/component/demoiselle-cassandra/1.0.0-RC1/images/nosql-logo.png
+
 *NoSQL*, acrônimo para "Not Only SQL", é um termo genérico para uma classe definida de bancos de dados que diferem do modelo clássico relacional, rompendo uma longa história de SGBDs com propriedades transacionais.
 
 Trata-se de um movimento que surgiu da necessidade de aplicações com desempenho superior e alta escalabilidade, funcionalidades que os bancos de dados relacionais não eram capazes de alcançar com facilidade.
@@ -21,6 +23,8 @@ Eis algumas implementações de bancos de dados NoSQL: Bigtable (Google), Dynamo
 Veja mais informações sobre NoSQL em http://nosql-database.org/.
 
 = O que é Apache Cassandra? =
+
+http://demoiselle.sourceforge.net/component/demoiselle-cassandra/1.0.0-RC1/images/cassandra-logo.png
 
 _"A high performance, scalable, distributed storage and processing system for structured and unstructured data."_
 
@@ -45,11 +49,17 @@ O modelo de dados do Apache Cassandra é baseado no Google Bigtable, possuindo a
 
 Eis um exemplo de modelagem com uma família de colunas:
 
+http://demoiselle.sourceforge.net/component/demoiselle-cassandra/1.0.0-RC1/images/datamodel1.png
+
 O Cassandra implementa também o conceito de *supercolunas*, isto é, colunas que carregam subcolunas. Eis um exemplo:
+
+http://demoiselle.sourceforge.net/component/demoiselle-cassandra/1.0.0-RC1/images/datamodel2.png
 
 Veja mais informações sobre o modelo de dados do Cassandra em http://wiki.apache.org/cassandra/DataModel/.
 
 = O que é Thrift? =
+
+http://demoiselle.sourceforge.net/component/demoiselle-cassandra/1.0.0-RC1/images/thrift-logo.png
 
 Acessar e manipular os dados armazenados no Apache Cassandra não é uma tarefa trivial, uma vez que não existe uma linguagem de consultas _ad-hoc_ tal como SQL. Ao invés disso, é preciso utilizar uma API de baixo nível chamada *Thrift*.
 
