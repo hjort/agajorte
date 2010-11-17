@@ -28,6 +28,7 @@ Apache Cassandra
 
 %{toc|section=1|fromDepth=1|toDepth=3}
 
+
 * {O que é NoSQL?}
 
 [images/nosql-logo.png] Logo NoSQL
@@ -73,7 +74,7 @@ Apache Cassandra
   O Cassandra foi inicialmente criado pelo <<Facebook>>, tendo seu código fonte liberado para a <<Fundação Apache>> em 2008. Desde
   então é mantido por esta através de desenvolvedores e contribuidores de diversas empresas.
   
-  Eis as referências para os trabalhos que inspiraram o Cassandra:
+  Eis as referências para os trabalhos que inspiraram o desenvolvimento do Cassandra:
   
   * {{{http://labs.google.com/papers/bigtable-osdi06.pdf}Bigtable: A Distributed Storage System for Structured Data - Chang et al (Google) - 7th OSDI (2006)}}
   
@@ -92,7 +93,7 @@ Apache Cassandra
   
   * <<Row Key>> ou simplemente <<Key>>: chave que representa uma linha de colunas (similar a uma chave primária)
   
-  * <<Column>>: representação de um valor, contendo:
+  * <<Column>>: representação de um valor, contendo o tripleto:
   
     ** Nome (<<Name>>)
     
@@ -112,8 +113,12 @@ Apache Cassandra
 
 [images/datamodel2.png] SuperColunas
 
+  Veja mais informações sobre o modelo de dados do Cassandra em {{http://wiki.apache.org/cassandra/DataModel/}}.
+
 
 * {O que é Thrift?}
+
+[images/thrift-logo.png] Logo Thrift
 
   Acessar e manipular os dados armazenados no Apache Cassandra não é uma tarefa trivial, uma vez que não existe uma
   linguagem de consultas <ad-hoc> tal como SQL. Ao invés disso, é preciso utilizar uma API de baixo nível chamada
@@ -150,7 +155,7 @@ Apache Cassandra
   
   []
   
-  Veja mais informações sobre Thrift em {{http://incubator.apache.org/thrift/}}.
+  Veja mais informações sobre Thrift em {{http://incubator.apache.org/thrift/}} e em {{http://wiki.apache.org/cassandra/API/}}.
   
   
 * {O que é Hector?}
