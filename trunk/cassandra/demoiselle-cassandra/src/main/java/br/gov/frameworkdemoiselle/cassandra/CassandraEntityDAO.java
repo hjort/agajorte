@@ -9,8 +9,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import me.prettyprint.cassandra.dao.Command;
-import me.prettyprint.cassandra.model.HectorException;
-import me.prettyprint.cassandra.service.Keyspace;
+import me.prettyprint.cassandra.service.KeyspaceService;
+import me.prettyprint.hector.api.exceptions.HectorException;
 
 import org.apache.cassandra.thrift.Column;
 import org.apache.cassandra.thrift.ColumnParent;
@@ -144,7 +144,9 @@ public abstract class CassandraEntityDAO<T> extends AbstractCassandraDAO<T> {
 
 		try {
 			execute(new Command<Void>() {
-				public Void execute(final Keyspace ks) throws HectorException {
+
+				@Override
+				public Void execute(KeyspaceService ks) throws HectorException {
 					ks.batchInsert(typeConverter.bytesToString(idColumn),
 							columnMap, superColumnMap);
 					return null;
@@ -179,7 +181,9 @@ public abstract class CassandraEntityDAO<T> extends AbstractCassandraDAO<T> {
 	public void delete(final String key) {
 		try {
 			execute(new Command<Void>() {
-				public Void execute(final Keyspace ks) throws HectorException {
+
+				@Override
+				public Void execute(KeyspaceService ks) throws HectorException {
 					ks.remove(key, new ColumnPath(columnFamily));
 					return null;
 				}
@@ -196,7 +200,9 @@ public abstract class CassandraEntityDAO<T> extends AbstractCassandraDAO<T> {
 
 		try {
 			return execute(new Command<T>() {
-				public T execute(final Keyspace ks) throws HectorException {
+
+				@Override
+				public T execute(KeyspaceService ks) throws HectorException {
 					try {
 						final List<Column> slice = ks.getSlice(key, parent, predicate);
 						if (Iterables.isEmpty(slice)) {
@@ -274,7 +280,9 @@ public abstract class CassandraEntityDAO<T> extends AbstractCassandraDAO<T> {
 		final SlicePredicate predicate = makeSlicePredicateWithAllPropertyColumns();
 		try {
 			return execute(new Command<List<T>>() {
-				public List<T> execute(final Keyspace ks) throws HectorException {
+
+				@Override
+				public List<T> execute(KeyspaceService ks) throws HectorException {
 					final Map<String, List<Column>> slice = ks.multigetSlice(
 							ImmutableList.copyOf(keys), parent, predicate);
 					return convertToList(slice);
@@ -290,8 +298,10 @@ public abstract class CassandraEntityDAO<T> extends AbstractCassandraDAO<T> {
 		final SlicePredicate predicate = makeSlicePredicateWithAllPropertyColumns();
 		try {
 			return execute(new Command<List<T>>() {
+
+				@Override
 				@SuppressWarnings("deprecation")
-				public List<T> execute(final Keyspace ks) throws HectorException {
+				public List<T> execute(KeyspaceService ks) throws HectorException {
 					final Map<String, List<Column>> slice = ks.getRangeSlice(
 							parent, predicate, keyStart, keyEnd, amount);
 					return convertToList(slice);
@@ -331,7 +341,9 @@ public abstract class CassandraEntityDAO<T> extends AbstractCassandraDAO<T> {
 
 		try {
 			return execute(new Command<List<T>>() {
-				public List<T> execute(final Keyspace ks) throws HectorException {
+
+				@Override
+				public List<T> execute(KeyspaceService ks) throws HectorException {
 					try {
 						final List<SuperColumn> slice = ks.getSuperSlice(key, parent, predicate);
 						return applyColumns(key, slice);

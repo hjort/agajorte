@@ -7,8 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import me.prettyprint.cassandra.dao.Command;
-import me.prettyprint.cassandra.model.HectorException;
-import me.prettyprint.cassandra.service.Keyspace;
+import me.prettyprint.cassandra.service.KeyspaceService;
+import me.prettyprint.hector.api.exceptions.HectorException;
 
 import org.apache.cassandra.thrift.Column;
 import org.apache.cassandra.thrift.ColumnParent;
@@ -100,8 +100,9 @@ public abstract class CassandraColumnDAO<T> extends AbstractCassandraDAO<T> {
 			final byte[] value = tempValue;
 
 			execute(new Command<Void>() {
-				public Void execute(final Keyspace ks) throws HectorException {
-					
+				
+				@Override
+				public Void execute(KeyspaceService ks) throws HectorException {
 					ColumnPath columnPath = new ColumnPath();
 					columnPath.setColumn_family(columnFamily);
 					columnPath.setColumn(columnBytes);
@@ -134,8 +135,9 @@ public abstract class CassandraColumnDAO<T> extends AbstractCassandraDAO<T> {
 			final byte[] columnBytes = typeConverter.convertValueObjectToByteArray(columnValue);
 
 			execute(new Command<Void>() {
-				public Void execute(final Keyspace ks) throws HectorException {
-					
+
+				@Override
+				public Void execute(KeyspaceService ks) throws HectorException {
 					ColumnPath columnPath = new ColumnPath();
 					columnPath.setColumn_family(columnFamily);
 					columnPath.setColumn(columnBytes);
@@ -161,8 +163,9 @@ public abstract class CassandraColumnDAO<T> extends AbstractCassandraDAO<T> {
 		final List<String> result = new ArrayList<String>();
 		try {
 			execute(new Command<Void>() {
-				public Void execute(final Keyspace ks) throws HectorException {
-					
+
+				@Override
+				public Void execute(KeyspaceService ks) throws HectorException {
 					SlicePredicate predicate = new SlicePredicate();
 					SliceRange sliceRange = new SliceRange();
 			        sliceRange.setStart(new byte[] {});
@@ -179,6 +182,7 @@ public abstract class CassandraColumnDAO<T> extends AbstractCassandraDAO<T> {
 							result.add(name);
 						}
 					}
+					
 					return null;
 				}
 			});
@@ -192,8 +196,9 @@ public abstract class CassandraColumnDAO<T> extends AbstractCassandraDAO<T> {
 		final List<String> result = new ArrayList<String>();
 		try {
 			execute(new Command<Void>() {
-				public Void execute(final Keyspace ks) throws HectorException {
-					
+
+				@Override
+				public Void execute(KeyspaceService ks) throws HectorException {
 					SlicePredicate predicate = new SlicePredicate();
 					SliceRange sliceRange = new SliceRange();
 			        sliceRange.setStart(new byte[] {});
@@ -210,6 +215,7 @@ public abstract class CassandraColumnDAO<T> extends AbstractCassandraDAO<T> {
 							result.add(name);
 						}
 					}
+					
 					return null;
 				}
 			});
@@ -223,8 +229,9 @@ public abstract class CassandraColumnDAO<T> extends AbstractCassandraDAO<T> {
 		final List<String> result = new ArrayList<String>();
 		try {
 			execute(new Command<Void>() {
-				public Void execute(final Keyspace ks) throws HectorException {
-					
+
+				@Override
+				public Void execute(KeyspaceService ks) throws HectorException {
 					SlicePredicate predicate = new SlicePredicate();
 					SliceRange sliceRange = new SliceRange();
 			        sliceRange.setStart(new byte[] {});
@@ -241,6 +248,7 @@ public abstract class CassandraColumnDAO<T> extends AbstractCassandraDAO<T> {
 							result.add(value);
 						}
 					}
+					
 					return null;
 				}
 			});
