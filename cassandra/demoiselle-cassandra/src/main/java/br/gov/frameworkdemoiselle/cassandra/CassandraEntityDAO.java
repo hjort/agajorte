@@ -124,7 +124,7 @@ public abstract class CassandraEntityDAO<T> extends AbstractCassandraDAO<T> {
 
 		final byte[] idColumn = marshalledObject.getKey();
 		final List<Column> columnList = Lists.newLinkedList();
-		final long timestamp = System.currentTimeMillis();
+		final long timestamp = System.currentTimeMillis() * 1000;
 
 		for (final Map.Entry<String, byte[]> property : marshalledObject.getEntries()) {
 			columnList.add(toColumn(property, timestamp));
