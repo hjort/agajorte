@@ -25,6 +25,7 @@ import br.gov.frameworkdemoiselle.cassandra.annotation.KeyProperty;
 import br.gov.frameworkdemoiselle.cassandra.persistence.MarshalledObject;
 import br.gov.frameworkdemoiselle.cassandra.persistence.TypeConverter;
 
+import com.google.common.base.Functions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -291,6 +292,10 @@ public abstract class CassandraEntityDAO<T> extends AbstractCassandraDAO<T> {
 		} catch (final Exception e) {
 			throw new CassandraException(e);
 		}
+	}
+
+	public List<T> get(final List<String> keys) {
+		return get(Iterables.transform(keys, Functions.toStringFunction()));
 	}
 
 	public List<T> getRange(final String keyStart, final String keyEnd, final int amount) {
