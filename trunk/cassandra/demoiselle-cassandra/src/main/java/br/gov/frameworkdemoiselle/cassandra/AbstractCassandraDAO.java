@@ -19,8 +19,14 @@ import br.gov.frameworkdemoiselle.cassandra.annotation.SuperColumnProperty;
 import br.gov.frameworkdemoiselle.cassandra.annotation.Transient;
 import br.gov.frameworkdemoiselle.cassandra.annotation.ValueProperty;
 import br.gov.frameworkdemoiselle.cassandra.layer.integration.CassandraConfig;
+import br.gov.frameworkdemoiselle.cassandra.mapping.BooleanTypeMapping;
+import br.gov.frameworkdemoiselle.cassandra.mapping.ByteTypeMapping;
+import br.gov.frameworkdemoiselle.cassandra.mapping.CharacterTypeMapping;
+import br.gov.frameworkdemoiselle.cassandra.mapping.DoubleTypeMapping;
+import br.gov.frameworkdemoiselle.cassandra.mapping.FloatTypeMapping;
 import br.gov.frameworkdemoiselle.cassandra.mapping.IntegerTypeMapping;
 import br.gov.frameworkdemoiselle.cassandra.mapping.LongTypeMapping;
+import br.gov.frameworkdemoiselle.cassandra.mapping.ShortTypeMapping;
 import br.gov.frameworkdemoiselle.cassandra.mapping.StringTypeMapping;
 import br.gov.frameworkdemoiselle.cassandra.mapping.URITypeMapping;
 import br.gov.frameworkdemoiselle.cassandra.mapping.UUIDTypeMapping;
@@ -56,6 +62,21 @@ public abstract class AbstractCassandraDAO<T> {
 
     protected TypeConverter typeConverter;
     
+    private static final ImmutableMap<Class<?>, TypeMapping<?>> DEFAULT_TYPES =
+    	new ImmutableMap.Builder<Class<?>, TypeMapping<?>>()
+    		.put(String.class, new StringTypeMapping())
+	        .put(Character.class, new CharacterTypeMapping())
+	        .put(Byte.class, new ByteTypeMapping())
+	        .put(Short.class, new ShortTypeMapping())
+	        .put(Integer.class, new IntegerTypeMapping())
+	        .put(Long.class, new LongTypeMapping())
+	        .put(Float.class, new FloatTypeMapping())
+	        .put(Double.class, new DoubleTypeMapping())
+	        .put(Boolean.class, new BooleanTypeMapping())
+	        .put(UUID.class, new UUIDTypeMapping())
+	        .put(URI.class, new URITypeMapping())
+    		.build();
+    /*
     private static final Map<Class<?>, TypeMapping<?>> DEFAULT_TYPES =
     	ImmutableMap.<Class<?>, TypeMapping<?>>of(
 	        String.class, new StringTypeMapping(),
@@ -64,6 +85,7 @@ public abstract class AbstractCassandraDAO<T> {
 	        Integer.class, new IntegerTypeMapping(),
 	        URI.class, new URITypeMapping()
     	);
+    */
 
 	@SuppressWarnings("unchecked")
 	public AbstractCassandraDAO() {
