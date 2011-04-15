@@ -40,13 +40,15 @@ public class TwitterFacade implements ITwitterFacade {
 
 	private static final int TWEETS_DEFAULT_COUNT = 40;
 
+	/*
 	public TwitterFacade() {
-//		userDAO = new UserDAO();
-//		followshipDAO = new FollowshipDAO();
-//		tweetDAO = new TweetDAO();
-//		userlineDAO = new UserLineDAO();
-//		timelineDAO = new TimeLineDAO();
+		userDAO = new UserDAO();
+		followshipDAO = new FollowshipDAO();
+		tweetDAO = new TweetDAO();
+		userlineDAO = new UserLineDAO();
+		timelineDAO = new TimeLineDAO();
 	}
+	*/
 	
 	public User createUser(String login, String name, String password) {
 		
