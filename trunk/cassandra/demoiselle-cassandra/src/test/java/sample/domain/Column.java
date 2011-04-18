@@ -5,7 +5,7 @@ import br.gov.frameworkdemoiselle.cassandra.annotation.ColumnProperty;
 import br.gov.frameworkdemoiselle.cassandra.annotation.KeyProperty;
 import br.gov.frameworkdemoiselle.cassandra.annotation.ValueProperty;
 
-@CassandraColumn(keyspace = "Keyspace1", columnFamily = "Standard1", secondaryColumnFamily = "Standard2")
+@CassandraColumn(columnFamily = "Standard1", secondaryColumnFamily = "Standard2")
 public class Column {
 
 	@KeyProperty

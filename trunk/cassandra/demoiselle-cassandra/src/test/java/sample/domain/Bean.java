@@ -3,7 +3,7 @@ package sample.domain;
 import br.gov.frameworkdemoiselle.cassandra.annotation.CassandraEntity;
 import br.gov.frameworkdemoiselle.cassandra.annotation.KeyProperty;
 
-@CassandraEntity(keyspace = "Keyspace1", columnFamily = "Standard1")
+@CassandraEntity(columnFamily = "Standard1")
 public class Bean {
 	
 	@KeyProperty
