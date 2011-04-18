@@ -320,6 +320,19 @@
 			<scope>test</scope>
 		</dependency>
 		
+		<dependency>
+			<groupId>org.cliffc.high_scale_lib</groupId>
+			<artifactId>high-scale-lib</artifactId>
+			<version>1.0.0</version>
+			<scope>test</scope>
+	    </dependency>
+	    <dependency>
+			<groupId>com.reardencommerce</groupId>
+			<artifactId>clhm-production</artifactId>
+			<version>1.0.0</version>
+			<scope>test</scope>
+	    </dependency>
+		
 		<!-- Demoiselle Framework -->
 		<dependency>
 			<groupId>br.gov.framework.demoiselle</groupId>
