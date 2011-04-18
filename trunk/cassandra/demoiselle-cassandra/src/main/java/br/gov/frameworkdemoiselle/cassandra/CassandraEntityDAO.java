@@ -51,8 +51,14 @@ public abstract class CassandraEntityDAO<T> extends AbstractCassandraDAO<T> {
 		typeConverter = new TypeConverter(typeMappings, serializeUnknownClasses);
 		propertyDescriptors = PropertyUtils.getPropertyDescriptors(clz);
 
+		if (!"".equals(annotation.keyspace())) {
+			this.keyspace = annotation.keyspace();
+		} else if (this.keyspace == null) {
+			throw new CassandraException("Could not find keyspace for "
+					+ clz.getName() + ", annotate it on @CassandraEntity or define in the properties file");
+		}
+
         columnFamily = annotation.columnFamily();
-        keyspace = annotation.keyspace();
 
         if (annotation.consistency() != null) {
         	consistencyLevel = annotation.consistency();

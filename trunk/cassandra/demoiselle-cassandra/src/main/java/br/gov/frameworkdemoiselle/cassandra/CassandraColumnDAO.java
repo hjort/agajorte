@@ -43,7 +43,13 @@ public abstract class CassandraColumnDAO<T> extends AbstractCassandraDAO<T> {
 		
 		this.typeConverter = new TypeConverter(typeMappings, serializeUnknownClasses);
 
-		this.keyspace = annotation.keyspace();
+		if (!"".equals(annotation.keyspace())) {
+			this.keyspace = annotation.keyspace();
+		} else if (this.keyspace == null) {
+			throw new CassandraException("Could not find keyspace for "
+					+ clz.getName() + ", annotate it on @CassandraColumn or define in the properties file");
+		}
+		
 		this.columnFamily = annotation.columnFamily();
 		this.secondaryColumnFamily = annotation.secondaryColumnFamily();
 

@@ -11,7 +11,7 @@ import org.apache.cassandra.thrift.ConsistencyLevel;
 @Target(ElementType.TYPE)
 public @interface CassandraColumn {
 
-	String keyspace();
+	String keyspace() default "";
 
 	String columnFamily();
 
