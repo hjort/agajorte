@@ -200,6 +200,10 @@ public abstract class CassandraColumnDAO<T> extends AbstractCassandraDAO<T> {
 	
 	public List<String> getColumnsBySecondary(final String key) {
 		final List<String> result = new ArrayList<String>();
+		if ("".equals(secondaryColumnFamily)) {
+			throw new CassandraException("Could not find secondary column family for "
+					+ clz.getName() + ", annotate it on @CassandraColumn");
+		}
 		try {
 			execute(new Command<Void>() {
 
@@ -263,5 +267,119 @@ public abstract class CassandraColumnDAO<T> extends AbstractCassandraDAO<T> {
 		}
 		return result;
 	}
-	
+
+	public List<T> getByPrimaryKey(final String key) {
+		final List<T> result = new ArrayList<T>();
+		try {
+			execute(new Command<Void>() {
+
+				@Override
+				public Void execute(KeyspaceService ks) throws HectorException {
+					SlicePredicate predicate = new SlicePredicate();
+					SliceRange sliceRange = new SliceRange();
+			        sliceRange.setStart(new byte[] {});
+			        sliceRange.setFinish(new byte[] {});
+			        predicate.setSlice_range(sliceRange);
+			        
+					List<Column> list = ks.getSlice(
+							key, new ColumnParent(columnFamily), predicate);
+					
+					if (list != null && !list.isEmpty()) {
+						T newInstance = null;
+						try {
+							for (final Column column : list) {
+								newInstance = clz.newInstance();
+								
+								if (keyDescriptor != null) {
+									byte[] keyBytes = typeConverter.stringToBytes(key);
+									final Class<?> returnType = keyDescriptor.getReadMethod().getReturnType();
+									PropertyUtils.setProperty(newInstance, keyDescriptor.getName(),
+											typeConverter.convertByteArrayToValueObject(returnType, keyBytes));
+								}
+								if (columnDescriptor != null) {
+									final Class<?> returnType = columnDescriptor.getReadMethod().getReturnType();
+									PropertyUtils.setProperty(newInstance, columnDescriptor.getName(),
+											typeConverter.convertByteArrayToValueObject(returnType, column.name));
+								}
+								if (valueDescriptor != null) {
+									final Class<?> returnType = valueDescriptor.getReadMethod().getReturnType();
+									PropertyUtils.setProperty(newInstance, valueDescriptor.getName(),
+											typeConverter.convertByteArrayToValueObject(returnType, column.value));
+								}
+								
+								result.add(newInstance);
+							}
+						} catch (Exception e) {
+							throw new CassandraException("Could not instantiate " + clz.getName(), e);
+						}
+					}
+					
+					return null;
+				}
+			});
+		} catch (final Exception e) {
+			throw new CassandraException(e);
+		}
+		return result;
+	}
+
+	public List<T> getBySecondaryKey(final String key) {
+		final List<T> result = new ArrayList<T>();
+		if ("".equals(secondaryColumnFamily)) {
+			throw new CassandraException("Could not find secondary column family for "
+					+ clz.getName() + ", annotate it on @CassandraColumn");
+		}
+		try {
+			execute(new Command<Void>() {
+
+				@Override
+				public Void execute(KeyspaceService ks) throws HectorException {
+					SlicePredicate predicate = new SlicePredicate();
+					SliceRange sliceRange = new SliceRange();
+			        sliceRange.setStart(new byte[] {});
+			        sliceRange.setFinish(new byte[] {});
+			        predicate.setSlice_range(sliceRange);
+			        
+					List<Column> list = ks.getSlice(
+							key, new ColumnParent(secondaryColumnFamily), predicate);
+					
+					if (list != null && !list.isEmpty()) {
+						T newInstance = null;
+						try {
+							for (final Column column : list) {
+								newInstance = clz.newInstance();
+								
+								if (keyDescriptor != null) {
+									final Class<?> returnType = keyDescriptor.getReadMethod().getReturnType();
+									PropertyUtils.setProperty(newInstance, keyDescriptor.getName(),
+											typeConverter.convertByteArrayToValueObject(returnType, column.name));
+								}
+								if (columnDescriptor != null) {
+									byte[] keyBytes = typeConverter.stringToBytes(key);
+									final Class<?> returnType = columnDescriptor.getReadMethod().getReturnType();
+									PropertyUtils.setProperty(newInstance, columnDescriptor.getName(),
+											typeConverter.convertByteArrayToValueObject(returnType, keyBytes));
+								}
+								if (valueDescriptor != null) {
+									final Class<?> returnType = valueDescriptor.getReadMethod().getReturnType();
+									PropertyUtils.setProperty(newInstance, valueDescriptor.getName(),
+											typeConverter.convertByteArrayToValueObject(returnType, column.value));
+								}
+								
+								result.add(newInstance);
+							}
+						} catch (Exception e) {
+							throw new CassandraException("Could not instantiate " + clz.getName(), e);
+						}
+					}
+					
+					return null;
+				}
+			});
+		} catch (final Exception e) {
+			throw new CassandraException(e);
+		}
+		return result;
+	}
+
 }

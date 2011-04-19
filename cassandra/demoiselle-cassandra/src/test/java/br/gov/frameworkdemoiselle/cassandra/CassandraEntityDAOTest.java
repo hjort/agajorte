@@ -18,7 +18,7 @@ import sample.persistence.BeanDAO;
 
 import com.google.common.collect.ImmutableList;
 
-public class CassandraEntityDAOTest extends BaseEmbededServerSetupTest {
+public class CassandraEntityDAOTest extends BaseEmbeddedServerSetupTest {
 
 	private static Logger log = Logger.getLogger(CassandraEntityDAOTest.class);
 	
@@ -33,7 +33,7 @@ public class CassandraEntityDAOTest extends BaseEmbededServerSetupTest {
 	public void tearDown() throws Exception {
 		dao = null;
 	}
-
+	
 	@Test
 	public void testSave() {
 		Bean bean = createBean();
@@ -105,6 +105,7 @@ public class CassandraEntityDAOTest extends BaseEmbededServerSetupTest {
 		
 		log.debug("Retrieving iterable list: " + keys);
 		final List<Bean> list = dao.get(ite);
+		log.debug(list);
 		assertEquals(2, list.size());
 		assertTrue(list.contains(createBean(100001l)));
 		assertTrue(list.contains(createBean(100005l)));
@@ -120,6 +121,7 @@ public class CassandraEntityDAOTest extends BaseEmbededServerSetupTest {
 		final List<String> keys = ImmutableList.of("100001", "100005", "100010");
 		log.debug("Retrieving list: " + keys);
 		final List<Bean> list = dao.get(keys);
+		log.debug(list);
 		assertEquals(2, list.size());
 		assertTrue(list.contains(createBean(100001l)));
 		assertTrue(list.contains(createBean(100005l)));
@@ -132,17 +134,19 @@ public class CassandraEntityDAOTest extends BaseEmbededServerSetupTest {
 	public void testGetRange() {
 		saveBeans();
 		
-		final String keyStart = "100002", keyEnd = "100004";
-		log.debug("Retrieving range: " + keyStart + " to " + keyEnd);
-		List<Bean> list = dao.getRange(keyStart, keyEnd, 100);
+		log.debug("Retrieving ranges:");
+		List<Bean> list = dao.getRange("100002", "100004", 100);
+		log.debug(list);
 		assertEquals(3, list.size());
 		assertTrue(list.contains(createBean(100003l)));
 		
 		list = dao.getRange("100008", "100010", 100);
+		log.debug(list);
 		assertEquals(2, list.size());
 		assertTrue(list.contains(createBean(100009l)));
 		
 		list = dao.getRange("100001", "100010", 5);
+		log.debug(list);
 		assertEquals(5, list.size());
 		assertTrue(list.contains(createBean(100002l)));
 		
