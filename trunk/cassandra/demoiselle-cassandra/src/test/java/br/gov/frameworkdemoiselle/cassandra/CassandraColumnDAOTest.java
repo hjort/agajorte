@@ -14,8 +14,8 @@ import org.junit.Test;
 import sample.domain.Column;
 import sample.persistence.ColumnDAO;
 
-public class CassandraColumnDAOTest extends BaseEmbededServerSetupTest {
-
+public class CassandraColumnDAOTest extends BaseEmbeddedServerSetupTest {
+	
 	private static Logger log = Logger.getLogger(CassandraColumnDAOTest.class);
 	
 	private ColumnDAO dao;
@@ -29,7 +29,7 @@ public class CassandraColumnDAOTest extends BaseEmbededServerSetupTest {
 	public void tearDown() throws Exception {
 		dao = null;
 	}
-
+	
 	@Test
 	public void testSave() {
 		Column col = createColumn();
@@ -39,6 +39,7 @@ public class CassandraColumnDAOTest extends BaseEmbededServerSetupTest {
 		assertTrue(true);
 
 		List<String> cols = dao.getColumns(col.getId().toString());
+		log.debug(cols);
 		assertFalse(cols.isEmpty());
 		assertEquals(1, cols.size());
 		assertEquals("name", cols.get(0));
@@ -54,6 +55,7 @@ public class CassandraColumnDAOTest extends BaseEmbededServerSetupTest {
 
 		final String key = col.getId().toString();
 		List<String> values = dao.getValues(key);
+		log.debug(values);
 		assertFalse(values.isEmpty());
 		
 		log.debug("Deleting column: " + col);
@@ -68,7 +70,9 @@ public class CassandraColumnDAOTest extends BaseEmbededServerSetupTest {
 	public void testGetColumns() {
 		saveColumns();
 		
+		log.debug("Retrieving columns:");
 		List<String> cols = dao.getColumns("2");
+		log.debug(cols);
 		assertFalse(cols.isEmpty());
 		assertEquals(3, cols.size());
 		assertEquals("ca", cols.get(0));
@@ -81,7 +85,9 @@ public class CassandraColumnDAOTest extends BaseEmbededServerSetupTest {
 	public void testGetColumnsBySecondary() {
 		saveColumns();
 		
+		log.debug("Retrieving columns by secondary:");
 		List<String> cols = dao.getColumnsBySecondary("ca");
+		log.debug(cols);
 		assertFalse(cols.isEmpty());
 		assertEquals(9, cols.size());
 		assertEquals("1", cols.get(0));
@@ -94,12 +100,48 @@ public class CassandraColumnDAOTest extends BaseEmbededServerSetupTest {
 	public void testGetValues() {
 		saveColumns();
 
+		log.debug("Retrieving values:");
 		List<String> values = dao.getValues("2");
+		log.debug(values);
 		assertFalse(values.isEmpty());
 		assertEquals(3, values.size());
 		assertEquals("2 ca", values.get(0));
 		assertTrue(values.contains("2 cb"));
 
+		removeColumns();
+	}
+
+	@Test
+	public void testGetByPrimaryKey() {
+		saveColumns();
+		
+		log.debug("Retrieving columns by primary key:");
+		List<Column> cols = dao.getByPrimaryKey("4");
+		log.debug(cols);
+		assertFalse(cols.isEmpty());
+		assertEquals(3, cols.size());
+		Column first = cols.get(0);
+		assertEquals(new Long(4l), first.getId());
+		assertEquals("ca", first.getColumn());
+		assertEquals("4 ca", first.getValue());
+		
+		removeColumns();
+	}
+
+	@Test
+	public void testGetBySecondaryKey() {
+		saveColumns();
+		
+		log.debug("Retrieving columns by secondary key:");
+		List<Column> cols = dao.getBySecondaryKey("ca");
+		log.debug(cols);
+		assertFalse(cols.isEmpty());
+		assertEquals(9, cols.size());
+		Column first = cols.get(0);
+		assertEquals(new Long(1l), first.getId());
+		assertEquals("ca", first.getColumn());
+		assertEquals("1 ca", first.getValue());
+		
 		removeColumns();
 	}
 
